@@ -1,19 +1,24 @@
 apply plugin: 'com.android.application'
+apply from: "${project.rootDir}/global.gradle"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
     defaultConfig {
-        applicationId "app.mobile.anative.com.mediaplus"
+        applicationId "app.mobile.native.com.mediaplus"
         minSdkVersion 11
-        targetSdkVersion 25
+        targetSdkVersion COMPILE_SDK_VERSION
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                cppFlags "-std=c++11"
             }
+        }
+
+        ndk {
+            abiFilters 'armeabi-v7a'
         }
     }
     buildTypes {
@@ -27,13 +32,54 @@ android {
             path "CMakeLists.txt"
         }
     }
+
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+        /**
+         * manifest.srcFile 'AndroidManifest.xml'
+         java.srcDirs = ['src']
+         resources.srcDirs = ['src']
+         aidl.srcDirs = ['src']
+         renderscript.srcDirs = ['src']
+         res.srcDirs = ['res']
+         assets.srcDirs = ['assets']
+         *
+         */
+
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+            universalApk false
+        }
+    }
+
+
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
+    compile supportDependencies["appCompatV7"]
+    testCompile testDependecencies["junit"]
+    compile project(':libraries:libmedia')
+    compile project(':libraries:libmodule')
 }
