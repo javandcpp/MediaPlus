@@ -345,7 +345,7 @@ const char *avio_find_protocol_name(const char *url);
  * masked by the value in flags.
  *
  * @note This function is intrinsically unsafe, in the sense that the
- * checked resource may change its existence or permission status from
+ * checked resource may change its existence or app.mobile.nativeapp.com.applicationmanagement.permission status from
  * one call to another. Thus you should not trust the returned value,
  * unless you are sure that no other processes are accessing the
  * checked resource.

@@ -6,7 +6,7 @@ android {
     buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion COMPILE_SDK_VERSION
         versionCode 1
         versionName "1.0"
@@ -42,4 +42,5 @@ dependencies {
     })
     compile supportDependencies["appCompatV7"]
     testCompile testDependecencies["junit"]
+    compile project(':libraries:applicationmanagement')
 }

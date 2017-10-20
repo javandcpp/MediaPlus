@@ -47,7 +47,7 @@
 ** permit persons to whom the Materials are furnished to do so, subject to
 ** the following conditions:
 **
-** The above copyright notice and this permission notice shall be included
+** The above copyright notice and this app.mobile.nativeapp.com.applicationmanagement.permission notice shall be included
 ** in all copies or substantial portions of the Materials.
 **
 ** THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -331,7 +331,7 @@ typedef enum {
 ** permit persons to whom the Materials are furnished to do so, subject to
 ** the following conditions:
 **
-** The above copyright notice and this permission notice shall be included
+** The above copyright notice and this app.mobile.nativeapp.com.applicationmanagement.permission notice shall be included
 ** in all copies or substantial portions of the Materials.
 **
 ** THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -496,7 +496,7 @@ extern "C" {
 ** permit persons to whom the Materials are furnished to do so, subject to
 ** the following conditions:
 **
-** The above copyright notice and this permission notice shall be included
+** The above copyright notice and this app.mobile.nativeapp.com.applicationmanagement.permission notice shall be included
 ** in all copies or substantial portions of the Materials.
 **
 ** THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -800,7 +800,7 @@ extern "C" {
 ** permit persons to whom the Materials are furnished to do so, subject to
 ** the following conditions:
 **
-** The above copyright notice and this permission notice shall be included
+** The above copyright notice and this app.mobile.nativeapp.com.applicationmanagement.permission notice shall be included
 ** in all copies or substantial portions of the Materials.
 **
 ** THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
