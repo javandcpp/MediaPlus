@@ -26,14 +26,14 @@
  */
 
 apply plugin: 'com.android.library'
-apply from: "${project.rootDir}/global.gradle"
+
 android {
-    compileSdkVersion COMPILE_SDK_VERSION
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion COMPILE_SDK_VERSION
+        minSdkVersion 11
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
 
@@ -53,16 +53,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile supportDependencies["appCompatV7"]
-    testCompile testDependecencies["junit"]
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
 
-
-    compile 'com.google.dagger:dagger-android:2.12'
-    compile 'com.google.dagger:dagger-android-support:2.12' // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.12'
-
-    compile project(':libraries:libmedia')
-    compile project(':libraries:libnet')
-    compile project(':libraries:libmvp')
-
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
 }

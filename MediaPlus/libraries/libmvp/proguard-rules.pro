@@ -15,6 +15,3 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-
--dontwarn okio.**
--dontwarn javax.annotation.**
