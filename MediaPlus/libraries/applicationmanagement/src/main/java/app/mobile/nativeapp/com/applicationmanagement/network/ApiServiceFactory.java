@@ -42,7 +42,7 @@ public class ApiServiceFactory {
         mRetrofit = NetworkManager.getInstance().getRetrofit();
     }
 
-    public <T> T createService(Class<T> serviceClass) {
+    public static  <T> T createService(Class<T> serviceClass) {
         if (null == mRetrofit) {
             attachRetrofit();
         }

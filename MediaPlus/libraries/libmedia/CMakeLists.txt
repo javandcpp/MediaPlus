@@ -12,10 +12,16 @@ cmake_minimum_required(VERSION 3.4.1)
 
 #包含头文件
 
-set(include-headers ${CMAKE_SOURCE_DIR}/src/main/cpp/include)
-include_directories(${include-headers})
+set(include-opencvheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/opencv)
+include_directories(${include-opencvheaders})
 
-set(include-sdl2headers ${CMAKE_SOURCE_DIR}/src/main/cpp/sdl2/include)
+set(include-yuvheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/yuv)
+include_directories(${include-yuvheaders})
+
+set(include-ffmpegheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/ffmpeg)
+include_directories(${include-ffmpegheaders})
+
+set(include-sdl2headers ${CMAKE_SOURCE_DIR}/src/main/cpp/sdl2/ffmpeg/sdl2)
 include_directories(${include-sdl2headers})
 
 #添加依赖库
@@ -70,7 +76,19 @@ set_target_properties( avdevice
                        PROPERTIES
                        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libavdevice.so )
 
+add_library(yuv SHARED IMPORTED)
+set_target_properties( yuv
+                       PROPERTIES
+                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libyuv.so)
 
+add_library(opencv SHARED IMPORTED)
+set_target_properties( opencv
+                       PROPERTIES
+                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libopencv.so)
+
+
+file(GLOB native_core_srcs "src/main/cpp/core/*.cpp")
+file(GLOB native_jni_srcs "src/main/cpp/jni/*.cpp")
 add_library( # Sets the name of the library.
              Media
              # Sets the library as a shared library.
@@ -79,19 +97,8 @@ add_library( # Sets the name of the library.
              # Provides a relative path to your source file(s).
              # Associated headers in the same location as their source
              # file are automatically included.
-             src/main/cpp/native-lib.cpp
-             src/main/cpp/jni_encode_h264.cpp
-             src/main/cpp/debug.cpp
-             src/main/cpp/jni_ffmpeg_config.cpp
-             src/main/cpp/jni_ffmpeg_bridge.cpp
-             src/main/cpp/jni_encode_aac.cpp
-             src/main/cpp/jni_handler.cpp
-             src/main/cpp/threadsafe_queue.cpp
-             src/main/cpp/NativeCrashHandler.cpp
-             src/main/cpp/jni_push_stream.c
-             src/main/cpp/jni_pull_stream.cpp
-             src/main/cpp/jni_trans_stream.cpp
-             src/main/cpp/jni_transstream.cpp
+             ${native_jni_srcs}
+             ${native_core_srcs}
              )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -127,6 +134,8 @@ target_link_libraries( # Specifies the target library.
                         fdkaac
                         avdevice
                         avpostproc
+                        yuv
+                        opencv
                         log
                         android   #这句很重要,涉及android中库的调用
                         )

@@ -35,4 +35,5 @@ package app.mobile.nativeapp.com.applicationmanagement.network.api_service;
 public interface ApiServiceConstants {
 
 
+    String BASE_URL = "http://app.pearvideo.com/";
 }

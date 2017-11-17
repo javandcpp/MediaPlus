@@ -30,6 +30,7 @@ package app.mobile.nativeapp.com.applicationmanagement.network;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import app.mobile.nativeapp.com.applicationmanagement.network.api_service.ApiServiceConstants;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -88,7 +89,7 @@ public final class NetworkManager {
                 .addNetworkInterceptor(mTokenInterceptor)
                 .build();
         retrofit = new Retrofit.Builder()
-//                .baseUrl(AppConfig.BASE_URL)
+                .baseUrl(ApiServiceConstants.BASE_URL)
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

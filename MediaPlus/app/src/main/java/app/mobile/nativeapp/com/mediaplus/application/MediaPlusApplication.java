@@ -31,10 +31,10 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-import java.util.Stack;
 import java.util.Vector;
 
 import app.mobile.nativeapp.com.applicationmanagement.base.ApplicationFramework;
+import app.mobile.nativeapp.com.libmedia.core.config.MediaNativeInit;
 
 
 /**
@@ -45,13 +45,14 @@ public class MediaPlusApplication extends Application implements Application.Act
 
     private Vector<Activity> mStack;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         mStack = new Vector<>();
         ApplicationFramework.injectContext(this);
         registerActivityLifecycleCallbacks(this);
-
+        MediaNativeInit.InitMedia();
     }
 
     @Override
