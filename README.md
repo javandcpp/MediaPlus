@@ -29,7 +29,7 @@
 
 		* Initialize audio and video capture
 		LiveJniMediaManager.InitAudioCapture(2, 48000, 16);
-		LiveJniMediaManager.InitVideoCapture(mVideoSizeConfig.srcFrameWidth, 		mVideoSizeConfig.srcFrameHeight, 640, 480, 25, true);
+		LiveJniMediaManager.InitVideoCapture(mVideoSizeConfig.srcFrameWidth,mVideoSizeConfig.srcFrameHeight, 640, 480, 25, true);
         
 		* Initialize audio and video encoder
 		LiveJniMediaManager.InitAudioEncoder();
