@@ -29,29 +29,28 @@
 ```
 
 * Initialize audio and video capture
-
-	LiveJniMediaManager.InitAudioCapture();
-	LiveJniMediaManager.InitVideoCapture();
+LiveJniMediaManager.InitAudioCapture();
+LiveJniMediaManager.InitVideoCapture();
 	
 * Initialize audio and video encoder
- 	LiveJniMediaManager.InitAudioEncoder();
-    LiveJniMediaManager.InitVideoEncoder();
+LiveJniMediaManager.InitAudioEncoder();
+LiveJniMediaManager.InitVideoEncoder();
     
 * Start Rtmp stream
-    LiveJniMediaManager.StartPush(pushUrl);
+LiveJniMediaManager.StartPush(pushUrl);
         
 * Camera switch
-    LiveJniMediaManager.SetCameraID(int cameraID);
+LiveJniMediaManager.SetCameraID(int cameraID);
         
     
 * Pass the video data and audio data to the H264 encoder or AAC encoder
-    LiveJniMediaManager.EncodeH264(videoBuffer, length);
-    LiveJniMediaManager.EncodeAAC(audioBuffer, length);
+LiveJniMediaManager.EncodeH264(videoBuffer, length);
+LiveJniMediaManager.EncodeAAC(audioBuffer, length);
  
  
 * Stop Rtmp stream and native release
-    LiveJniMediaManager.Close();
-    LiveJniMediaManager.Release();
+LiveJniMediaManager.Close();
+LiveJniMediaManager.Release();
     
 ```
 
