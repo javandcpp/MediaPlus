@@ -50,9 +50,8 @@
     * Stop Rtmp stream and native release
     LiveJniMediaManager.Close();
     LiveJniMediaManager.Release();
-        
- ```
-      
+    
+```
 
 #### UML:
 
