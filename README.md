@@ -64,4 +64,5 @@ LiveJniMediaManager.Release();
 </div>
 <div align=left>
 The above UML for the current class diagram, the current function is not too full, hope that through this project more and more rich, and permanently open source, detailed use please see the source code.
+RTMP server is not yet available, you need to build a local service.
 </div>
