@@ -19,14 +19,14 @@
 
 #### Use example:
 
+* android camera capture NV21 by the bottom of the conversion I420 (yuv420p), processing rotation, the front camera has been processed image; audio capture to PCM 16 bit sampling rate of 48000, no other processing; audio and video recording the initial time stamp of each frame, encoding The current timestamp calculates the difference as the AVFrame PTS, AVPacket data that the audio and video coding completed is sent in two threads.
 * The current version only supports RTMP protocol streaming, and subsequent  extensions will extend other protocols.
-
 * This version is only for android mobile audio and video capture and streaming.
 * Has not yet added a video filter, behind the use of opencv filter, look forward to!
 * At present the camera preview also needs opengl to draw, to be perfect.
-* android camera capture NV21 by the bottom of the conversion I420 (yuv420p), processing rotation, the front camera has been processed image; audio capture to PCM 16 bit sampling rate of 48000, no other processing; audio and video recording the initial time stamp of each frame, encoding The current timestamp calculates the difference as the AVFrame PTS, AVPacket data that the audio and video coding completed is sent in two threads.
 
 ```
+
 		* Initialize audio and video capture
 		LiveJniMediaManager.InitAudioCapture(2, 48000, 16);
 		LiveJniMediaManager.InitVideoCapture(mVideoSizeConfig.srcFrameWidth, 		mVideoSizeConfig.srcFrameHeight, 640, 480, 25, true);
@@ -50,10 +50,11 @@
        	* Stop Rtmp stream and native release
         LiveJniMediaManager.Close();
         LiveJniMediaManager.Release();
+        
  ```
       
 
-####UML:
+#### UML:
 
 <div align=center>
 <table>
