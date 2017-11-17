@@ -25,34 +25,36 @@
 * Has not yet added a video filter, behind the use of opencv filter, look forward to!
 * At present the camera preview also needs opengl to draw, to be perfect.
 
+
 ```
 
-    * Initialize audio and video capture
+* Initialize audio and video capture
+
 	LiveJniMediaManager.InitAudioCapture();
 	LiveJniMediaManager.InitVideoCapture();
 	
- 	* Initialize audio and video encoder
+* Initialize audio and video encoder
  	LiveJniMediaManager.InitAudioEncoder();
     LiveJniMediaManager.InitVideoEncoder();
     
-    * Start Rtmp stream
+* Start Rtmp stream
     LiveJniMediaManager.StartPush(pushUrl);
         
-    * Camera switch
+* Camera switch
     LiveJniMediaManager.SetCameraID(int cameraID);
         
     
-    * Pass the video data and audio data to the H264 encoder or AAC encoder
+* Pass the video data and audio data to the H264 encoder or AAC encoder
     LiveJniMediaManager.EncodeH264(videoBuffer, length);
     LiveJniMediaManager.EncodeAAC(audioBuffer, length);
  
  
-    * Stop Rtmp stream and native release
+* Stop Rtmp stream and native release
     LiveJniMediaManager.Close();
     LiveJniMediaManager.Release();
     
-    
 ```
+
 
 #### UML:
 
