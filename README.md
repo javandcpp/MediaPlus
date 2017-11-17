@@ -11,9 +11,11 @@
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_one.png"/>
 </tr>
 <div>
+</table>
 
 UML:
 <div align=center>
+<table>
 <tr>
 <img width="800" height="880" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaUML.png">
 </tr>
