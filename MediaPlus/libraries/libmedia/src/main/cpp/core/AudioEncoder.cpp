@@ -101,7 +101,7 @@ void *AudioEncoder::EncodeTask(void *p) {
         ret = avcodec_fill_audio_frame(audioEncoder->outputFrame,
                                        audioEncoder->audioCodecContext->channels,
                                        audioEncoder->audioCodecContext->sample_fmt, srcData->data,
-                                       8192, 0);
+                                       4096, 0);
         if (ret < 0) {
             LOG_D(DEBUG, "fill frame failed!");
             continue;

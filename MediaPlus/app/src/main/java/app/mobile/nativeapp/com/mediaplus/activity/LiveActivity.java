@@ -27,9 +27,10 @@
 
 package app.mobile.nativeapp.com.mediaplus.activity;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
@@ -37,6 +38,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -47,12 +49,15 @@ import app.mobile.nativeapp.com.libmedia.core.streamer.RtmpPushStreamer;
 import app.mobile.nativeapp.com.mediaplus.R;
 
 public class LiveActivity extends AppCompatActivity implements View.OnClickListener {
+    private final int SUCCESS = 100 << 1;
     private SurfaceView surfaceView;
     private TextView tvVideo;
     private TextView tvAudio;
     private RtmpPushStreamer mRtmpPushStreamer;
     private RelativeLayout videoParent;
     private Button btnStart;
+    private Handler mHandler;
+    private EditText etPushUrl;
 
 
     @Override
@@ -61,6 +66,24 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 防止锁屏
         setContentView(R.layout.activity_recorder);
         final Switch swflash = (Switch) findViewById(R.id.swFlash);
+        final TextView dotView = (TextView) findViewById(R.id.dotView);
+        etPushUrl = (EditText) findViewById(R.id.etStreamAddress);
+        mHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                switch (message.what) {
+                    case SUCCESS:
+                        if (dotView.getVisibility() == View.VISIBLE) {
+                            dotView.setVisibility(View.GONE);
+                        } else {
+                            dotView.setVisibility(View.VISIBLE);
+                        }
+                        mHandler.sendEmptyMessageDelayed(SUCCESS, 1000);
+                        break;
+                }
+                return false;
+            }
+        });
         swflash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -88,13 +111,14 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void PushSucess() {
                 btnStart.setText("停止直播");
-                Toast.makeText(getApplicationContext(),"推流成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "推流成功", Toast.LENGTH_LONG).show();
+                mHandler.sendEmptyMessage(SUCCESS);
             }
 
             @Override
             public void PushFailed() {
                 btnStart.setText("开始直播");
-                Toast.makeText(getApplicationContext(),"推流失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "推流失败", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -140,9 +164,10 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnStart:
                 if (mRtmpPushStreamer.isSpeak()) {
                     mRtmpPushStreamer.stopSpeak();
-
+                    btnStart.setText("开始直播");
+                    mHandler.removeCallbacksAndMessages(null);
                 } else {
-                    mRtmpPushStreamer.startSpeak();
+                    mRtmpPushStreamer.startSpeak(etPushUrl.getText().toString().trim());
 
                 }
                 break;

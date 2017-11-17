@@ -40,6 +40,15 @@
 
     </RelativeLayout>
 
+    <EditText
+        android:id="@+id/etStreamAddress"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:hint="请输入rtmp推流地址:"
+        android:layout_marginRight="20dp"
+        android:layout_height="40dp" />
+
     <TextView
         android:id="@+id/tvRec"
         android:layout_width="wrap_content"
@@ -50,6 +59,7 @@
         android:textColor="#FF0000" />
 
     <TextView
+        android:id="@+id/dotView"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginLeft="2dp"

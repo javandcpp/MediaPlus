@@ -59,6 +59,7 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
 
     public final SurfaceHolder mSurfaceHolder;
     private final PushStreamCall mPushStreamCallBack;
+    private String mPushurl;
     public int[] m_aiBufferLength;
     public AudioCaptureInterface mAudioCapture = new AudioCapture();
     public VideoCaptureInterface mVideoCapture = new VideoCapture();
@@ -175,9 +176,10 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
     }
 
 
-    public void startSpeak() {
+    public void startSpeak(String Pushurl) {
+        mPushurl = Pushurl;
         if (!speak) {
-            if (startPushStream("rtmp://192.168.1.105:1935/test/live")) {
+            if (startPushStream(mPushurl)) {
                 speak = true;
                 if (mPushStreamCallBack != null) {
                     mPushStreamCallBack.PushSucess();
