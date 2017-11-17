@@ -28,11 +28,11 @@
 ```
 
     * Initialize audio and video capture
-	LiveJniMediaManager.InitAudioCapture(2, 48000, 16);
-	LiveJniMediaManager.InitVideoCapture(640, 480, 640, 480, 25, true);
-
+	LiveJniMediaManager.InitAudioCapture();
+	LiveJniMediaManager.InitVideoCapture();
+	
  	* Initialize audio and video encoder
-	LiveJniMediaManager.InitAudioEncoder();
+ 	LiveJniMediaManager.InitAudioEncoder();
     LiveJniMediaManager.InitVideoEncoder();
     
     * Start Rtmp stream
@@ -50,6 +50,8 @@
     * Stop Rtmp stream and native release
     LiveJniMediaManager.Close();
     LiveJniMediaManager.Release();
+    
+    
 ```
 
 #### UML:
