@@ -42,11 +42,9 @@ LiveJniMediaManager.StartPush(pushUrl);
 * Camera switch
 LiveJniMediaManager.SetCameraID(int cameraID);
         
-    
 * Pass the video data and audio data to the H264 encoder or AAC encoder
 LiveJniMediaManager.EncodeH264(videoBuffer, length);
 LiveJniMediaManager.EncodeAAC(audioBuffer, length);
- 
  
 * Stop Rtmp stream and native release
 LiveJniMediaManager.Close();
