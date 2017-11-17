@@ -27,29 +27,30 @@
 
 ```
 
-		* Initialize audio and video capture
-		LiveJniMediaManager.InitAudioCapture(2, 48000, 16);
-		LiveJniMediaManager.InitVideoCapture(mVideoSizeConfig.srcFrameWidth,mVideoSizeConfig.srcFrameHeight, 640, 480, 25, true);
+
+    * Initialize audio and video capture
+	LiveJniMediaManager.InitAudioCapture(2, 48000, 16);
+	LiveJniMediaManager.InitVideoCapture(640, 480, 640, 480, 25, true);
         
-		* Initialize audio and video encoder
-		LiveJniMediaManager.InitAudioEncoder();
-        LiveJniMediaManager.InitVideoEncoder();
+	* Initialize audio and video encoder
+	LiveJniMediaManager.InitAudioEncoder();
+    LiveJniMediaManager.InitVideoEncoder();
         
-        * Start Rtmp stream
-        LiveJniMediaManager.StartPush(pushUrl);
+    * Start Rtmp stream
+    LiveJniMediaManager.StartPush(pushUrl);
         
-        * Camera switch
-        LiveJniMediaManager.SetCameraID(int cameraID);
+    * Camera switch
+    LiveJniMediaManager.SetCameraID(int cameraID);
         
         
-        * Pass the video data and audio data to the H264 encoder or AAC encoder
-        LiveJniMediaManager.EncodeH264(videoBuffer, length);
-        LiveJniMediaManager.EncodeAAC(audioBuffer, length);
+    * Pass the video data and audio data to the H264 encoder or AAC encoder
+    LiveJniMediaManager.EncodeH264(videoBuffer, length);
+    LiveJniMediaManager.EncodeAAC(audioBuffer, length);
        
-       
-       	* Stop Rtmp stream and native release
-        LiveJniMediaManager.Close();
-        LiveJniMediaManager.Release();
+    
+    * Stop Rtmp stream and native release
+    LiveJniMediaManager.Close();
+    LiveJniMediaManager.Release();
         
  ```
       
