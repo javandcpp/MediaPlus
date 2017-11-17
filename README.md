@@ -13,7 +13,9 @@
 <div>
 </table>
 
+<div align=left> 
 UML:
+</div>
 <div align=center>
 <table>
 <tr>
