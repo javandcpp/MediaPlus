@@ -1,7 +1,7 @@
 # MediaPlus
 
 
-- libMedia 多媒体组件 ：采集、编码、滤镜、rtmp推流.
+- libMedia Multimedia components: acquisition, coding, filters, rtmp push flow.
 
 
 <div align=center>
@@ -10,13 +10,17 @@
 <tr>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_one.png"/>
 </tr>
-<div>
+
 </table>
 
+</div>
 
-<div align=left>
-####Use example:
-* The current version only supports RTMP protocol streaming, and subsequent extensions will extend other protocols.
+
+
+#### Use example:
+
+* The current version only supports RTMP protocol streaming, and subsequent  extensions will extend other protocols.
+
 * This version is only for android mobile audio and video capture and streaming.
 * Has not yet added a video filter, behind the use of opencv filter, look forward to!
 * At present the camera preview also needs opengl to draw, to be perfect.
@@ -24,11 +28,11 @@
 
 ```
 		* Initialize audio and video capture
-        LiveJniMediaManager.InitAudioCapture(2, 48000, 16);
-        LiveJniMediaManager.InitVideoCapture(mVideoSizeConfig.srcFrameWidth, mVideoSizeConfig.srcFrameHeight, 640, 480, 25, true);
+		LiveJniMediaManager.InitAudioCapture(2, 48000, 16);
+		LiveJniMediaManager.InitVideoCapture(mVideoSizeConfig.srcFrameWidth, 		mVideoSizeConfig.srcFrameHeight, 640, 480, 25, true);
         
-        * Initialize audio and video encoder
-        LiveJniMediaManager.InitAudioEncoder();
+		* Initialize audio and video encoder
+		LiveJniMediaManager.InitAudioEncoder();
         LiveJniMediaManager.InitVideoEncoder();
         
         * Start Rtmp stream
@@ -46,13 +50,11 @@
        	* Stop Rtmp stream and native release
         LiveJniMediaManager.Close();
         LiveJniMediaManager.Release();
+ ```
       
-```
-</div>
 
-<div align=left> 
 ####UML:
-</div>
+
 <div align=center>
 <table>
 <tr>
