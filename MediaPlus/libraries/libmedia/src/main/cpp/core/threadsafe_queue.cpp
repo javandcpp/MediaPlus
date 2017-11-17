@@ -1,7 +1,4 @@
 /**
- * Created by jianxi on 2017/5/31.
- * https://github.com/mabeijianxi
- * mabeijianxi@gmail.com
  */
 #ifndef JIANXIFFMPEG_THREADSAFE_QUEUE_CPP
 #define JIANXIFFMPEG_THREADSAFE_QUEUE_CPP
@@ -12,9 +9,6 @@
 #include <mutex>
 #include <condition_variable>
 
-/**
- * 一个安全的队列
- */
 template<typename T>
 class threadsafe_queue {
 private:
