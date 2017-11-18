@@ -30,8 +30,8 @@
 ```
 
 * Initialize audio and video capture
-LiveJniMediaManager.InitAudioCapture();
-LiveJniMediaManager.InitVideoCapture();
+LiveJniMediaManager.InitAudioCapture(params...);
+LiveJniMediaManager.InitVideoCapture(params...);
 	
 * Initialize audio and video encoder
 LiveJniMediaManager.InitAudioEncoder();
