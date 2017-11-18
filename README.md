@@ -6,7 +6,7 @@
 
 <div>
 
-<table style="margin：0px auto">
+<table frame=void rules=none>
 <tr align="center">
 <td align=center>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_one.png"/>
