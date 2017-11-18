@@ -6,12 +6,13 @@
 
 <div align=center>
 <table>
-<tr>
+<td>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_one.png"/>
-</tr>
-<tr>
+</td>
+<div  width="50" ></div>
+<td>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_live.gif"/>
-</tr>
+</td>
 </table>
 
 </div>
