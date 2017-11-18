@@ -5,14 +5,13 @@
 
 
 <div align=center>
-<table style="border-collapse:separate; border-spacing:0px 50px;">
-<tr>
+<table  cellspacing="10" style="border-collapse:separate; border-spacing:0px 50px;">
+<td>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_one.png"/>
-</tr>
-<tr>
+</td>
+<td>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_live.gif"/>
-</tr>
-
+</td>
 </table>
 
 </div>
