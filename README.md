@@ -53,7 +53,7 @@ LiveJniMediaManager.Close();
 LiveJniMediaManager.Release();
     
 ```
-#### [API Document](https://javandoc.github.io/javadoc/)
+#### -- [API Document](https://javandoc.github.io/javadoc/) --
 
 #### C++ class diagram：
 
