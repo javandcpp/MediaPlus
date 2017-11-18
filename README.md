@@ -54,7 +54,7 @@ LiveJniMediaManager.Release();
 ```
 
 
-#### UML:
+#### C++ class diagram：
 
 <div align=center>
 <table>
