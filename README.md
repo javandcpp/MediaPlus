@@ -59,7 +59,7 @@ LiveJniMediaManager.Release();
 <div align=center>
 <table>
 <tr>
-<img width="800" height="900" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaUML.jpg">
+<img width="800" height="880" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaUML.jpg">
 </tr>
 </table>
 </div>
