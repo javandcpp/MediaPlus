@@ -4,18 +4,14 @@
 - libMedia Multimedia components: acquisition, coding, filters, rtmp push flow.
 
 
-<div>
-
-<table frame=void rules=none>
-<tr align="center">
-<td align=center>
+<div align=center>
+<table>
+<tr>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_one.png"/>
-</td>
-<td align=center>
-<img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_live.gif"/>
-</td>
 </tr>
-
+<tr>
+<img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_live.gif"/>
+</tr>
 </table>
 
 </div>
