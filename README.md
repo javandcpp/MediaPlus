@@ -8,12 +8,12 @@
 
 <table>
 <tr>
-<td></td>
-<td></td>
+<td>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_one.png"/>
-
-
-<video width="300" height="480" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_live.mp4"/>
+</td>
+<td>
+<img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_live.gif"/>
+</td>
 </tr>
 
 </table>
