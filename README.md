@@ -24,7 +24,7 @@
 * This version is only for android mobile audio and video capture and streaming.
 * Has not yet added a video filter, behind the use of opencv filter, look forward to!
 * At present the camera preview also needs opengl to draw, to be perfect.
-* Without RTMP server, you need to set up local RTMP service.
+* Without RTMP server, you need to set up local RTMP service,If there is no RtmpServer, you can also write a local test, just push the stream address to “/mnt/sdcard/test.flv”.
 * The following is a JNI API call.
 
 ```
