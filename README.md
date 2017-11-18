@@ -54,6 +54,8 @@ LiveJniMediaManager.Release();
     
 ```
 
+<a href="https://github.com/javandoc/MediaPlus/blob/master/Resource/javadoc/index.html">API document</a>
+
 
 #### C++ class diagram：
 
