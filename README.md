@@ -24,7 +24,8 @@
 * This version is only for android mobile audio and video capture and streaming.
 * Has not yet added a video filter, behind the use of opencv filter, look forward to!
 * At present the camera preview also needs opengl to draw, to be perfect.
-
+* Without RTMP server, you need to set up local RTMP service.
+* The following is a JNI API call.
 
 ```
 
@@ -58,11 +59,10 @@ LiveJniMediaManager.Release();
 <div align=center>
 <table>
 <tr>
-<img width="800" height="880" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaUML.png">
+<img width="800" height="900" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaUML.png">
 </tr>
 </table>
 </div>
 <div align=left>
 The above UML for the current class diagram, the current function is not too full, hope that through this project more and more rich, and permanently open source, detailed use please see the source code.
-RTMP server is not yet available, you need to build a local service.
 </div>
