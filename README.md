@@ -6,7 +6,7 @@
 
 <div align=center>
 
-<table>
+<table border=0 align=center>
 <tr>
 <td>
 <img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/screen_one.png"/>
@@ -64,7 +64,7 @@ LiveJniMediaManager.Release();
 <div align=center>
 <table>
 <tr>
-<img width="790" height="768" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaUML.jpg">
+<img width="790" height="768" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaUML.png">
 </tr>
 </table>
 </div>
