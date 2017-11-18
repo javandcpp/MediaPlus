@@ -30,6 +30,7 @@ apply from: "${project.rootDir}/global.gradle"
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
+    publishNonDefault true
 
     defaultConfig {
         minSdkVersion 15
@@ -72,7 +73,8 @@ dependencies {
     compile 'com.google.dagger:dagger-android-support:2.12'
     // if you use the support libraries
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.12'
-    compile project(':libraries:libmedia')
+    releaseCompile project(path:':libraries:libmedia',configuration:'release')
+    debugCompile project(path:':libraries:libmedia',configuration:'debug')
     compile project(':libraries:libnet')
     compile project(':libraries:libmvp')
     compile project(':libraries:libdatabase')

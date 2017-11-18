@@ -4,6 +4,7 @@ apply from: "${project.rootDir}/global.gradle"
 android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
+    publishNonDefault true
 
     defaultConfig {
         minSdkVersion 15
