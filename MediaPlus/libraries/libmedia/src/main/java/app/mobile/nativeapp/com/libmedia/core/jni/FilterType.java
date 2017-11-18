@@ -28,6 +28,7 @@
 package app.mobile.nativeapp.com.libmedia.core.jni;
 
 /**
+ * 滤镜类型
  * Created by android on 11/12/17.
  */
 public enum FilterType {

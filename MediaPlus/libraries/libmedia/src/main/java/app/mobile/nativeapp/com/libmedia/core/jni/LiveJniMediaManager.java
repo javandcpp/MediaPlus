@@ -28,12 +28,15 @@
 package app.mobile.nativeapp.com.libmedia.core.jni;
 
 /**
- * 媒体处理(直播推流)
+ * JNI媒体管理接口
  * Created by android on 11/12/17.
  */
 
 public class LiveJniMediaManager {
 
+    /**
+     * 前置后置摄像头
+     */
     public enum CameraID {
         FRONT, BACK
     }
@@ -51,9 +54,9 @@ public class LiveJniMediaManager {
     /**
      * 初始化音频采集
      *
-     * @param channles
-     * @param SampleRate
-     * @param SampleBitRate
+     * @param channles    音频通道
+     * @param SampleRate  采样率
+     * @param SampleBitRate 采样位数
      * @return
      */
     public static native int InitAudioCapture(int channles, int SampleRate, int SampleBitRate);
@@ -61,12 +64,12 @@ public class LiveJniMediaManager {
     /**
      * 初始化视频采集
      *
-     * @param inWidth
-     * @param inHeight
-     * @param outWidth
-     * @param outHeight
-     * @param fps
-     * @param mirror
+     * @param inWidth   输入宽度
+     * @param inHeight  输入高度
+     * @param outWidth  输出宽度
+     * @param outHeight 输出高度
+     * @param fps       帧率
+     * @param mirror    是否镜像
      * @return
      */
     public static native int InitVideoCapture(int inWidth, int inHeight, int outWidth, int outHeight, int fps, boolean mirror);
@@ -74,7 +77,7 @@ public class LiveJniMediaManager {
     /**
      * 开启推流
      *
-     * @param url
+     * @param url  推流地址
      * @return
      */
     public static native int StartPush(String url);
@@ -96,8 +99,8 @@ public class LiveJniMediaManager {
     /**
      * 视频滤镜
      *
-     * @param filterType
-     * @param filterValue
+     * @param filterType  滤镜类型
+     * @param filterValue 滤镜取值
      * @return
      */
     public static native int Filter(FilterType filterType, int filterValue);
@@ -105,8 +108,8 @@ public class LiveJniMediaManager {
     /**
      * 上传音频数据编码AAC
      *
-     * @param audioBuffer
-     * @param length
+     * @param audioBuffer 数据缓冲区
+     * @param length      数据长度
      * @return
      */
     public static native int EncodeAAC(byte[] audioBuffer, int length);
@@ -114,8 +117,8 @@ public class LiveJniMediaManager {
     /**
      * 上传视频数据编码H264
      *
-     * @param videoBuffer
-     * @param length
+     * @param videoBuffer 数据缓冲区
+     * @param length      数据长度
      * @return
      */
     public static native int EncodeH264(byte[] videoBuffer, int length);
@@ -124,7 +127,7 @@ public class LiveJniMediaManager {
     /**
      * 设置摄像头
      *
-     * @param cameraID
+     * @param cameraID  相机ID
      */
     public static native void SetCameraID(int cameraID);
 }

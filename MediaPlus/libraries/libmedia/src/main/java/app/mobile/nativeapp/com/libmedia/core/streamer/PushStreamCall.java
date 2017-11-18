@@ -28,7 +28,7 @@
 package app.mobile.nativeapp.com.libmedia.core.streamer;
 
 /**
- * Created by android on 11/17/17.
+ * 推流回调
  */
 public interface PushStreamCall {
 

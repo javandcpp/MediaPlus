@@ -29,8 +29,8 @@
 package app.mobile.nativeapp.com.libmedia.core.streamer;
 
 /**
- * Created by android on 10/19/17.
+ * 推流器基类
  */
 
-public class PushBase {
+public abstract class PushBase {
 }

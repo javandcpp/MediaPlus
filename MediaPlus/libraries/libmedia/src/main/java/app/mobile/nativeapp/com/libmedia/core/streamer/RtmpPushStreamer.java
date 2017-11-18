@@ -52,10 +52,11 @@ import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
 
 /**
- * Created by android on 10/31/17.
+ * Rtmp推流功能实现
  */
 
-public class RtmpPushStreamer implements SurfaceHolder.Callback {
+public class RtmpPushStreamer extends
+        PushBase implements SurfaceHolder.Callback {
 
     public final SurfaceHolder mSurfaceHolder;
     private final PushStreamCall mPushStreamCallBack;
@@ -117,6 +118,10 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         }
     }
 
+    /**
+     * 初始化Native采集
+     * @return
+     */
     private boolean initCapture() {
         int ret = 0;
         ret = LiveJniMediaManager.InitAudioCapture(2, 48000, 16);
@@ -132,6 +137,10 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         return true;
     }
 
+    /**
+     * 初始化native编码器
+     * @return
+     */
     private boolean initEncoder() {
         int ret = 0;
         ret = LiveJniMediaManager.InitAudioEncoder();
@@ -162,6 +171,11 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         return nativeInt;
     }
 
+    /**
+     * 开启推流
+     * @param pushUrl
+     * @return
+     */
     private boolean startPushStream(String pushUrl) {
         if (nativeInt) {
             int ret = 0;
@@ -175,7 +189,10 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         return false;
     }
 
-
+    /**
+     * 开始直播
+     * @param Pushurl
+     */
     public void startSpeak(String Pushurl) {
         mPushurl = Pushurl;
         if (!speak) {
@@ -197,7 +214,9 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         return speak;
     }
 
-
+    /**
+     * 直播停止
+     */
     public void stopSpeak() {
         if (speak) {
             speak = false;
@@ -205,7 +224,10 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         }
     }
 
-
+    /**
+     * 锁毁推流器
+     * @return
+     */
     public boolean destroy() {
         if (!destroy) {
             destroy = true;
@@ -225,7 +247,9 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         return false;
     }
 
-
+    /**
+     * 关闭音视频采集
+     */
     public void closeAudioVideoCapture() {
         if (null != mAudioCapture && mAudioCapture.IsStartAudioCapture()) {
             if (m_oVideoThread != null) {
@@ -450,6 +474,12 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         }
     }
 
+    /**
+     * 采集的YUV视频数据
+     *
+     * @param videoBuffer
+     * @param length
+     */
     public void encodeVideo(byte[] videoBuffer, int length) {
         try {
             LiveJniMediaManager.EncodeH264(videoBuffer, length);
@@ -458,7 +488,12 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         }
     }
 
-
+    /**
+     * 采集的PCM音频数据
+     *
+     * @param audioBuffer
+     * @param length
+     */
     public void encodeAudio(byte[] audioBuffer, int length) {
         try {
             LiveJniMediaManager.EncodeAAC(audioBuffer, length);
@@ -467,8 +502,12 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
         }
     }
 
-
-    // 切换摄像头
+    /**
+     * 相机切换
+     *
+     * @param type
+     * @param micIndex
+     */
     public void switchCamera(int type, short micIndex) {
         try {
             if (s_lCameraInfoList == null) {
@@ -497,6 +536,13 @@ public class RtmpPushStreamer implements SurfaceHolder.Callback {
     }
 
 
+    /**
+     * 打开相机
+     *
+     * @param iBufferLen
+     * @param i
+     * @return
+     */
     public boolean openCamera(int[] iBufferLen, int i) {
         mVideoCapture.CloseVideoDevice();
         VideoCaptureInterface.OpenVideoDeviceReturn retVideo = null;

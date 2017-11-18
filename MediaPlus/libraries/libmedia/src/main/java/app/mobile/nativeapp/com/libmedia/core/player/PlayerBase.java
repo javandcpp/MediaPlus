@@ -28,7 +28,7 @@
 package app.mobile.anative.com.libmedia.core.player;
 
 /**
- * Created by android on 10/19/17.
+ * 播放器基类
  */
 
 public class PlayerBase {
