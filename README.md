@@ -4,6 +4,11 @@
 <img width="100" height="100" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/github_qr.png"/>
 </div>
 
+#### android 音视频采集与直播SDK：
+* [v1.0 采集音视频并处理数据转换与编码，Rtmp推流](https://github.com/javandoc/MediaPlus/releases/tag/v1.0)
+
+* [文档链接](http://www.jianshu.com/u/f5072293c4b3)
+
 
 <div align=center>
 <table border=0 cellspacing="10" style="border-collapse:separate; border-spacing:0px 50px;">
@@ -55,7 +60,9 @@ LiveJniMediaManager.Release();
     
    
 ```
-#### --[下载APK]（）--
+
+
+#### -- [download APK](https://github.com/javandoc/MediaPlus/blob/master/Resource/app-debug1.0.apk) --
 
 #### -- [版本记录](https://github.com/javandoc/MediaPlus/releases/) --
 
