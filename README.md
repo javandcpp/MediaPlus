@@ -62,7 +62,7 @@ LiveJniMediaManager.Release();
 ```
 
 
-#### -- [download APK](https://github.com/javandoc/MediaPlus/blob/master/Resource/app-debug1.0.apk) --
+#### -- [download APK](https://github.com/javandoc/MediaPlus/commits/master/Resource/app-debug1.0.apk) --
 
 #### -- [版本记录](https://github.com/javandoc/MediaPlus/releases/) --
 
