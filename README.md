@@ -7,7 +7,7 @@
 #### android 音视频采集与直播SDK：
 * [v1.0 采集音视频并处理数据转换与编码，Rtmp推流](https://github.com/javandoc/MediaPlus/releases/tag/v1.0)
 
-* [文档链接](http://www.jianshu.com/u/f5072293c4b3)
+* [文档链接](https://juejin.im/user/5809cf500bd1d00057ddc475)
 
 <div align=center>
 <img src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaPlus_xmind.png"/>
