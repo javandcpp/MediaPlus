@@ -31,35 +31,32 @@
 
 #### Use example:
 
-* android camera capture NV21 by the bottom of the conversion I420 (yuv420p), processing rotation, the front camera has been processed image; audio capture to PCM 16 bit sampling rate of 48000, no other processing; audio and video recording the initial time stamp of each frame, encoding The current timestamp calculates the difference as the AVFrame PTS, AVPacket data that the audio and video coding completed is sent in two threads.
-* The current version only supports RTMP protocol streaming, and subsequent  extensions will extend other protocols.
-* This version is only for android mobile audio and video capture and streaming.
-* Has not yet added a video filter, behind the use of opencv filter, look forward to!
-* At present the camera preview also needs opengl to draw, to be perfect.
-* Without RTMP server, you need to set up local RTMP service,If there is no RtmpServer, you can also write a local test, just push the stream address to “/mnt/sdcard/test.flv”.
-* The following is a JNI API call.
+* Android相机采集NV21格式数据，并使用libyuv转换I420（yuv420p）、处理I420旋转、前置摄像头镜像; 音频采集PCM数据：2通道、16位、采样率48000KHz; 音频和视频记录每帧的初始时间戳，编码当前时间戳记计算差值作为AVFrame PTS，音频和视频编码(软编)后的AVPacket数据通过音视频推流线程完成推流。
+* V1.0版本只支持RTMP协议，后续扩展会扩展其他协议。
+* 仅适用于Android移动音频和视频的采集和推流。
+* V1.0没有添加任何视频滤镜等其他特效，后续版本会新增视频滤镜等功能。
+* 后续版本考虑OpenCV,OpenGl完成视频滤镜等功能。
+* 如果没有RTMP服务器，需要设置本地RTMP服务;也可以写入本地文件，只需更改推流地址，如：“/mnt/sdcard/test.flv”。
+* 以下为相关API调用：
 
 ```
 
-* Initialize audio and video capture
-LiveJniMediaManager.InitAudioCapture(params...);
-LiveJniMediaManager.InitVideoCapture(params...);
+* 初始化音视频采集
+LiveJniMediaManager.InitAudioCapture(int channles, int SampleRate, int SampleBitRate);
+LiveJniMediaManager.InitVideoCapture(int inWidth, int inHeight, int outWidth, int outHeight, int fps, boolean mirror);
 	
-* Initialize audio and video encoder
+* 初始化音视频编码器
 LiveJniMediaManager.InitAudioEncoder();
 LiveJniMediaManager.InitVideoEncoder();
     
-* Start Rtmp stream
+* 开始推流
 LiveJniMediaManager.StartPush(pushUrl);
         
-* Camera switch
-LiveJniMediaManager.SetCameraID(int cameraID);
-        
-* Pass the video data and audio data to the H264 encoder or AAC encoder
+* 发送音视频数据至底层
 LiveJniMediaManager.EncodeH264(videoBuffer, length);
 LiveJniMediaManager.EncodeAAC(audioBuffer, length);
  
-* Stop Rtmp stream and native release
+* 停止推流与资源回收
 LiveJniMediaManager.Close();
 LiveJniMediaManager.Release();
     
