@@ -1,7 +1,7 @@
 # MediaPlus  
 
 <div align=left>
-<img width="100" height="100" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaPlus_qr.png"/>
+<img width="100" height="100" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaPlus_2.png"/>
 </div>
 
 #### android 音视频采集与直播SDK：
