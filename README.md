@@ -67,16 +67,3 @@ LiveJniMediaManager.Release();
 #### -- [版本记录](https://github.com/javandoc/MediaPlus/releases/) --
 
 #### -- [API文档](https://javandoc.github.io/javadoc/) --
-
-#### C++ class diagram：
-
-<div align=center>
-<table>
-<tr>
-<img width="790" height="768" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaUML.png">
-</tr>
-</table>
-</div>
-<div align=left>
-The above UML for the current class diagram, the current function is not too full, hope that through this project more and more rich, and permanently open source, detailed use please see the source code.
-</div>
