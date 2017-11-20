@@ -1,7 +1,8 @@
-# MediaPlus
+# MediaPlus  
 
-
-- libMedia Multimedia components: acquisition, coding, filters, rtmp push flow.
+<div align=left>
+<img width="100" height="100" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/github_qr.png"/>
+</div>
 
 
 <div align=center>
@@ -52,8 +53,13 @@ LiveJniMediaManager.EncodeAAC(audioBuffer, length);
 LiveJniMediaManager.Close();
 LiveJniMediaManager.Release();
     
+   
 ```
-#### -- [API Document](https://javandoc.github.io/javadoc/) --
+#### --[下载APK]（）--
+
+#### -- [版本记录](https://github.com/javandoc/MediaPlus/releases/) --
+
+#### -- [API文档](https://javandoc.github.io/javadoc/) --
 
 #### C++ class diagram：
 
