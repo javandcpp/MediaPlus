@@ -51,6 +51,7 @@ import app.mobile.nativeapp.com.applicationmanagement.permission.PermissionManag
 import app.mobile.nativeapp.com.libmedia.core.config.VideoSizeConfig;
 import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
+import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
 
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
 
@@ -96,6 +97,8 @@ public class RtmpPushStreamer extends
         mPushStreamCallBack = pushStreamCallBack;
         File externalStorageDirectory = Environment.getExternalStorageDirectory();
         surfaceView.getHolder().addCallback(this);
+        NativeCrashHandler nativeCrashHandler = new NativeCrashHandler();
+        nativeCrashHandler.registerForNativeCrash(context.getApplicationContext());
 
         videoFile = new File(externalStorageDirectory, "video.yuv");
         audioFile = new File(externalStorageDirectory, "audio.pcm");

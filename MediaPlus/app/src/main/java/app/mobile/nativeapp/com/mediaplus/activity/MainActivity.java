@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btnPushStream).setOnClickListener(this);
-        NativeCrashHandler nativeCrashHandler = new NativeCrashHandler();
-        nativeCrashHandler.registerForNativeCrash(this.getApplicationContext());
+
     }
 
     @Override

@@ -48,6 +48,7 @@ import android.widget.Toast;
 import app.mobile.nativeapp.com.applicationmanagement.inter.PermissionCheckResult;
 import app.mobile.nativeapp.com.applicationmanagement.permission.PermissionManager;
 import app.mobile.nativeapp.com.applicationmanagement.utils.AppUtils;
+import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
 import app.mobile.nativeapp.com.libmedia.core.streamer.PushStreamCall;
 import app.mobile.nativeapp.com.libmedia.core.streamer.RtmpPushStreamer;
 import app.mobile.nativeapp.com.mediaplus.R;
