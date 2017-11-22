@@ -27,9 +27,11 @@
 
 package app.mobile.nativeapp.com.libmedia.core.streamer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.RequiresPermission;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -191,6 +193,7 @@ public class RtmpPushStreamer extends
      * 开始直播
      * @param Pushurl
      */
+    @RequiresPermission(allOf = {Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO})
     public void startSpeak(String Pushurl) {
         mPushurl = Pushurl;
         if (!speak) {
