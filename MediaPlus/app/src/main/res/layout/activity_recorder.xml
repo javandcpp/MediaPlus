@@ -43,19 +43,19 @@
     <EditText
         android:id="@+id/etStreamAddress"
         android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:hint="请输入rtmp推流地址:"
         android:layout_marginRight="20dp"
-        android:layout_height="40dp" />
+        android:layout_marginTop="40dp"
+        android:hint="请输入rtmp推流地址:" />
 
     <TextView
         android:id="@+id/tvRec"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:text="REC"
-        android:layout_marginLeft="10dp"
         android:textColor="#FF0000" />
 
     <TextView
@@ -63,10 +63,11 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginLeft="2dp"
-        android:gravity="center_vertical"
         android:layout_toRightOf="@id/tvRec"
+        android:gravity="center_vertical"
         android:text="●"
-        android:textColor="#FF0000" />
+        android:textColor="#FF0000"
+        android:textSize="10dp" />
 
 
     <LinearLayout
@@ -83,8 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:checked="false"
             android:layout_marginRight="2dp"
+            android:checked="false"
             android:switchPadding="5dp"
             android:text="美    颜"
             android:textColor="@color/colorAccent"
@@ -96,13 +97,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="2dp"
+            android:layout_marginTop="10dp"
             android:switchPadding="5dp"
             android:text="闪光灯"
             android:textColor="@color/colorAccent"
             android:textSize="12sp" />
+
+
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvTxBytes"
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+
+                android:text="Tx [0.0KB/s]"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvRxBytes"
+                android:text="Rx [0.0KB/s]"
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
     </LinearLayout>
+
 
 
     <LinearLayout

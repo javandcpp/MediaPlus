@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 import app.mobile.nativeapp.com.applicationmanagement.inter.PermissionCheckResult;
 import app.mobile.nativeapp.com.applicationmanagement.permission.PermissionManager;
+import app.mobile.nativeapp.com.applicationmanagement.utils.AppUtils;
 import app.mobile.nativeapp.com.libmedia.core.streamer.PushStreamCall;
 import app.mobile.nativeapp.com.libmedia.core.streamer.RtmpPushStreamer;
 import app.mobile.nativeapp.com.mediaplus.R;
@@ -70,6 +71,8 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_recorder);
         final Switch swflash = (Switch) findViewById(R.id.swFlash);
         final TextView dotView = (TextView) findViewById(R.id.dotView);
+        final TextView tvTx = (TextView) findViewById(R.id.tvTxBytes);
+        final TextView tvRx = (TextView) findViewById(R.id.tvRxBytes);
         etPushUrl = (EditText) findViewById(R.id.etStreamAddress);
         mHandler = new Handler(new Handler.Callback() {
             @Override
@@ -81,6 +84,11 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
                         } else {
                             dotView.setVisibility(View.VISIBLE);
                         }
+
+//                        long rxBytes = AppUtils.getRxBytes();
+//                        long txBytes = AppUtils.getTxBytes();
+//                        tvTx.setText("Tx [" + txBytes / 1000 + "KB/s]");
+//                        tvRx.setText("Rx [" + rxBytes / 1000 + "KB/s]");
                         mHandler.sendEmptyMessageDelayed(SUCCESS, 1000);
                         break;
                 }
@@ -90,7 +98,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         swflash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(null!=mRtmpPushStreamer) {
+                if (null != mRtmpPushStreamer) {
                     if (!mRtmpPushStreamer.Light()) {
                         swflash.setChecked(false);
                         Toast.makeText(getApplicationContext(), "前置摄像头,不支持闪光灯!", Toast.LENGTH_SHORT).show();
@@ -144,17 +152,16 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void beDenied() {
-                mRtmpPushStreamer=null;
-                Toast.makeText(getApplicationContext(),"请检查像机、麦克风权限",Toast.LENGTH_LONG).show();
+                mRtmpPushStreamer = null;
+                Toast.makeText(getApplicationContext(), "请检查像机、麦克风权限", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void beDeniedWithoutHint() {
-                mRtmpPushStreamer=null;
-                Toast.makeText(getApplicationContext(),"权限被拒绝",Toast.LENGTH_LONG).show();
+                mRtmpPushStreamer = null;
+                Toast.makeText(getApplicationContext(), "权限被拒绝", Toast.LENGTH_LONG).show();
             }
-        }, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
+        }, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
 
     }
@@ -162,7 +169,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        if(null!=mRtmpPushStreamer) {
+        if (null != mRtmpPushStreamer) {
             mRtmpPushStreamer.onActivityResume();
         }
     }
@@ -170,7 +177,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        if(null!=mRtmpPushStreamer) {
+        if (null != mRtmpPushStreamer) {
             mRtmpPushStreamer.onActivityPause();
         }
     }
@@ -183,7 +190,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null!=mRtmpPushStreamer) {
+        if (null != mRtmpPushStreamer) {
             mRtmpPushStreamer.destroy();
         }
     }
