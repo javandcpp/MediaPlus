@@ -27,18 +27,12 @@
 
 package app.mobile.nativeapp.com.libmedia.core.jni;
 
-import app.mobile.nativeapp.com.libmedia.core.config.MediaNativeInit;
-
 /**
  * 色彩空间处理
  * Created by android on 11/16/17.
  */
 
 public class LibJniVideoProcess {
-
-    static {
-        MediaNativeInit.InitMedia();
-    }
 
     /**
      * NV21转换I420
@@ -55,6 +49,7 @@ public class LibJniVideoProcess {
 
     /**
      * 镜像I420
+     *
      * @param in_width  输入宽度
      * @param in_height 输入高度
      * @param srcData   源数据
@@ -67,6 +62,7 @@ public class LibJniVideoProcess {
 
     /**
      * 指定角度旋转I420
+     *
      * @param in_width  输入宽度
      * @param in_height 输入高度
      * @param srcData   源数据
@@ -75,5 +71,18 @@ public class LibJniVideoProcess {
     public static native int RotateI420(int in_width, int in_height,
                                         byte[] srcData,
                                         byte[] dstData, int rotationValue);
+
+    /**
+     * opencv 双边滤波
+     * @param in_width
+     * @param in_height
+     * @param srcData
+     * @param dstData
+     * @return
+     */
+    public static native int Beauty(int in_width, int in_height,
+                                    byte[] srcData,
+                                    byte[] dstData);
+
 
 }

@@ -34,7 +34,6 @@ import android.os.Bundle;
 import java.util.Vector;
 
 import app.mobile.nativeapp.com.applicationmanagement.base.ApplicationFramework;
-import app.mobile.nativeapp.com.libmedia.core.config.MediaNativeInit;
 
 
 /**
@@ -52,7 +51,6 @@ public class MediaPlusApplication extends Application implements Application.Act
         mStack = new Vector<>();
         ApplicationFramework.injectContext(this);
         registerActivityLifecycleCallbacks(this);
-        MediaNativeInit.InitMedia();
     }
 
     @Override

@@ -20,6 +20,7 @@
 
 
 extern "C" {
+
 static struct sigaction old_sa[NSIG];
 
 static jclass applicationClass = 0;
@@ -137,7 +138,9 @@ void nativeCrashHandler_sigaction(int signal, struct siginfo *siginfo, void *sig
 
     _makeNativeCrashReport(strsignal(signal), siginfo, sigcontext);
 }
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 JNIEXPORT jboolean
 Java_app_mobile_nativeapp_com_libmedia_core_nativehandler_NativeCrashHandler_nRegisterForNativeCrash(
@@ -161,7 +164,13 @@ Java_app_mobile_nativeapp_com_libmedia_core_nativehandler_NativeCrashHandler_nUn
     if (applicationObject) {
         env->DeleteGlobalRef(applicationObject);
     }
+    return;
 }
+
+#ifdef __cplusplus
+}
+#endif
+
 
 
 jint JNI_OnLoad(JavaVM *vm, void *reserved) {

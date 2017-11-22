@@ -33,4 +33,8 @@ package app.mobile.nativeapp.com.libmedia.core.streamer;
  */
 
 public abstract class PushBase {
+
+    static {
+        System.loadLibrary("Media");
+    }
 }

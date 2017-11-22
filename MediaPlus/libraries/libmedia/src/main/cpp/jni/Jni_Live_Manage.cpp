@@ -7,6 +7,7 @@
 #include <jni.h>
 #include "jni_Live_Manage.h"
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif

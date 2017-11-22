@@ -87,9 +87,6 @@ public class RtmpPushStreamer extends
     private boolean nativeInt;
     private boolean speak;
 
-    static {
-        System.loadLibrary("Media");
-    }
 
     public RtmpPushStreamer(Activity context, SurfaceView surfaceView, PushStreamCall pushStreamCallBack) {
         mSurfaceHolder = surfaceView.getHolder();

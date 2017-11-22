@@ -55,9 +55,9 @@ public class NativeCrashHandler {
 
     public void registerForNativeCrash(Context ctx) {
         this.ctx = ctx;
-        if(!this.nRegisterForNativeCrash()) {
-            throw new RuntimeException("Could not register for native crash as nativeCrashHandler_onLoad was not called in JNI context");
-        }
+//        if(!this.nRegisterForNativeCrash()) {
+//            throw new RuntimeException("Could not register for native crash as nativeCrashHandler_onLoad was not called in JNI context");
+//        }
     }
 
     public void unregisterForNativeCrash() {

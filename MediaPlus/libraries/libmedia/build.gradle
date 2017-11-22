@@ -6,6 +6,7 @@ android {
     buildToolsVersion BUILD_TOOLS_VERSION
     publishNonDefault true
 
+
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
@@ -28,6 +29,23 @@ android {
             path "CMakeLists.txt"
         }
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+            universalApk false
+        }
+    }
+
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['src/main/jniLibs']
+//        }
+//    }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -39,13 +57,9 @@ android {
             jniDebuggable true
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
+
+
 }
-
-
 
 
 
