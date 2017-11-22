@@ -27,6 +27,7 @@
 
 package app.mobile.nativeapp.com.mediaplus.activity;
 
+import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +45,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import app.mobile.nativeapp.com.applicationmanagement.inter.PermissionCheckResult;
+import app.mobile.nativeapp.com.applicationmanagement.permission.PermissionManager;
 import app.mobile.nativeapp.com.libmedia.core.streamer.PushStreamCall;
 import app.mobile.nativeapp.com.libmedia.core.streamer.RtmpPushStreamer;
 import app.mobile.nativeapp.com.mediaplus.R;
@@ -87,9 +90,11 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         swflash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!mRtmpPushStreamer.Light()) {
-                    swflash.setChecked(false);
-                    Toast.makeText(getApplicationContext(), "前置摄像头,不支持闪光灯!", Toast.LENGTH_SHORT).show();
+                if(null!=mRtmpPushStreamer) {
+                    if (!mRtmpPushStreamer.Light()) {
+                        swflash.setChecked(false);
+                        Toast.makeText(getApplicationContext(), "前置摄像头,不支持闪光灯!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -106,56 +111,81 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         tvAudio = ((TextView) findViewById(R.id.tvAudioInfo));
         tvVideo = ((TextView) findViewById(R.id.tvVideoInfo));
 
-        SurfaceView surfaceView = new SurfaceView(this);
-        mRtmpPushStreamer = new RtmpPushStreamer(this, surfaceView, new PushStreamCall() {
+        PermissionManager.getInstance(this).permissonCheck(new PermissionCheckResult() {
             @Override
-            public void PushSucess() {
-                btnStart.setText("停止直播");
-                Toast.makeText(getApplicationContext(), "推流成功", Toast.LENGTH_LONG).show();
-                mHandler.sendEmptyMessage(SUCCESS);
+            public void granted() {
+                SurfaceView surfaceView = new SurfaceView(LiveActivity.this);
+                mRtmpPushStreamer = new RtmpPushStreamer(LiveActivity.this, surfaceView, new PushStreamCall() {
+                    @Override
+                    public void PushSucess() {
+                        btnStart.setText("停止直播");
+                        Toast.makeText(getApplicationContext(), "推流成功", Toast.LENGTH_LONG).show();
+                        mHandler.sendEmptyMessage(SUCCESS);
+                    }
+
+                    @Override
+                    public void PushFailed() {
+                        btnStart.setText("开始直播");
+                        Toast.makeText(getApplicationContext(), "推流失败", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
+                    surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(displayMetrics.widthPixels, displayMetrics.heightPixels));
+                } else {
+                    int width = getWindowManager().getDefaultDisplay().getWidth();
+                    int height = getWindowManager().getDefaultDisplay().getHeight();
+                    surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+                }
+                videoParent.addView(surfaceView);
             }
 
             @Override
-            public void PushFailed() {
-                btnStart.setText("开始直播");
-                Toast.makeText(getApplicationContext(), "推流失败", Toast.LENGTH_LONG).show();
+            public void beDenied() {
+                mRtmpPushStreamer=null;
+                Toast.makeText(getApplicationContext(),"请检查像机、麦克风权限",Toast.LENGTH_LONG).show();
             }
-        });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
-            surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(displayMetrics.widthPixels, displayMetrics.heightPixels));
-        } else {
-            int width = getWindowManager().getDefaultDisplay().getWidth();
-            int height = getWindowManager().getDefaultDisplay().getHeight();
-            surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
-        }
-        videoParent.addView(surfaceView);
+            @Override
+            public void beDeniedWithoutHint() {
+                mRtmpPushStreamer=null;
+                Toast.makeText(getApplicationContext(),"权限被拒绝",Toast.LENGTH_LONG).show();
+            }
+        }, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mRtmpPushStreamer.onActivityResume();
+        if(null!=mRtmpPushStreamer) {
+            mRtmpPushStreamer.onActivityResume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mRtmpPushStreamer.onActivityPause();
+        if(null!=mRtmpPushStreamer) {
+            mRtmpPushStreamer.onActivityPause();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mRtmpPushStreamer.destroy();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(null!=mRtmpPushStreamer) {
+            mRtmpPushStreamer.destroy();
+        }
     }
 
     @Override

@@ -26,77 +26,21 @@ include_directories(${include-sdl2headers})
 
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/libs/${ANDROID_ABI})
 
-#添加依赖库
 
-add_library(avcodec SHARED IMPORTED)
-set_target_properties(avcodec
+add_library(libyuv SHARED IMPORTED)
+set_target_properties(libyuv
                       PROPERTIES
-                      IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libavcodec.so)
+                      IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libyuv.so)
 
-#添加依赖库
-
-#添加依赖库
-# add_library(avfilter SHARED IMPORTED)
-# set_target_properties( avfilter
-#                        PROPERTIES
-#                        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libavfilter.so )
-#添加依赖库
-#add_library(avformat SHARED IMPORTED)
-# set_target_properties( avformat
-#                        PROPERTIES
-#                        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libavformat.so )
-#添加依赖库
-#add_library(avutil SHARED IMPORTED)
-# set_target_properties( avutil
-#                        PROPERTIES
-#                        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libavutil.so )
-#添加依赖库
-
-#添加依赖库
-#add_library(swresample SHARED IMPORTED)
-# set_target_properties( swresample
-#                        PROPERTIES
-#                        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libswresample.so )
-
-#添加依赖库
-# add_library(swscale SHARED IMPORTED)
-# set_target_properties( swscale
-#                        PROPERTIES
-#                        IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libswscale.so )
-
-#add_library(fdkaac SHARED IMPORTED)
-#set_target_properties( fdkaac
-#                       PROPERTIES
-#                      IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libfdk-aac.so )
-
-#add_library(avpostproc SHARED IMPORTED)
-#set_target_properties( avpostproc
-#                       PROPERTIES
-#                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libpostproc.so )
-
-#add_library(avdevice SHARED IMPORTED)
-#set_target_properties( avdevice
-#                       PROPERTIES
-#                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libavdevice.so )
-
-add_library(yuv SHARED IMPORTED)
-set_target_properties( yuv
-                       PROPERTIES
-                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libyuv.so)
-
-#add_library(opencv SHARED IMPORTED)
-#set_target_properties( opencv
-#                       PROPERTIES
-#                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libOpenCV.so)
 
 add_library(ffmpeg SHARED IMPORTED)
-set_target_properties( ffmpeg
-                       PROPERTIES
-                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libFfmpeg.so)
+set_target_properties(ffmpeg
+                      PROPERTIES
+                      IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libffmpeg.so)
 
 
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 
 file(GLOB native_core_srcs "src/main/cpp/core/*.cpp")
@@ -110,7 +54,7 @@ add_library( # Sets the name of the library.
              # Associated headers in the same location as their source
              # file are automatically included.
              ${native_jni_srcs}
-             #${native_core_srcs}
+             ${native_core_srcs}
              )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -131,5 +75,5 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 
-#target_link_libraries(Media  ${log-lib} avcodec avfilter avformat avutil swresample swscale fdkaac avdevice avpostproc yuv log android)
-target_link_libraries(Media  ${log-lib} yuv ffmpeg avcodec log android)
+#target_link_libraries(Media  ${log-lib} avcodec avfilter avformat avutil swresample swscale avdevice avpostproc yuv log android)
+target_link_libraries(Media  ${log-lib} libyuv ffmpeg log android)
