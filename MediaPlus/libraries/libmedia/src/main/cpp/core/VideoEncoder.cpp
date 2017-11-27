@@ -240,11 +240,11 @@ int VideoEncoder::InitEncode() {
     if (NULL != videoCapture->GetVideoEncodeArgs()) {
         videoCodecContext->flags |= AV_CODEC_FLAG_GLOBAL_HEADER; //全局参数
         videoCodecContext->codec_id = avCodec->id;
-        videoCodecContext->bit_rate = 500 * 1024 * 8;//压缩后每秒视频的bit位大小 50kB
+        videoCodecContext->bit_rate = 50 * 1024 * 8;//压缩后每秒视频的bit位大小 50kB
         videoCodecContext->width = videoCapture->GetVideoEncodeArgs()->out_height;
         videoCodecContext->height = videoCapture->GetVideoEncodeArgs()->out_width;
         videoCodecContext->framerate = {videoCapture->GetVideoEncodeArgs()->fps, 1};
-        videoCodecContext->gop_size = 50;
+        videoCodecContext->gop_size = 100;
         videoCodecContext->max_b_frames = 0;
         videoCodecContext->qmin = 10;
         videoCodecContext->qmax = 50;
@@ -266,7 +266,7 @@ int VideoEncoder::InitEncode() {
      */
 
     AVDictionary *opts = NULL;
-    av_dict_set(&opts, "preset", "faster", 0);//编码器的速度会影响推流音视频同步,所以这里需要设置下
+    av_dict_set(&opts, "preset", "ultrafast", 0);//编码器的速度会影响推流音视频同步,所以这里需要设置下
 //    av_dict_set(&opts, "tune", "zerolatency", 0);//如果开0延迟可能会影响视频质量
     av_dict_set(&opts, "profile", "baseline", 0);//I/P帧
 

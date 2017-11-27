@@ -37,6 +37,7 @@ import android.os.Bundle;
  */
 public class NativeCrashActivity extends Activity {
     public NativeCrashActivity() {
+
     }
 
     protected void onCreate(Bundle savedInstanceState) {

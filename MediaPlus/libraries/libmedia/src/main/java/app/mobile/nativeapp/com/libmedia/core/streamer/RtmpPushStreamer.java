@@ -27,12 +27,18 @@
 
 package app.mobile.nativeapp.com.libmedia.core.streamer;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraManager;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.RequiresPermission;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import com.guagua.avcapture.AudioCaptureInterface;
 import com.guagua.avcapture.VideoCaptureInterface;
@@ -49,6 +55,7 @@ import app.mobile.nativeapp.com.applicationmanagement.permission.PermissionManag
 import app.mobile.nativeapp.com.libmedia.core.config.VideoSizeConfig;
 import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
+import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
 
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
 
@@ -61,6 +68,7 @@ public class RtmpPushStreamer extends
 
     public final SurfaceHolder mSurfaceHolder;
     private final PushStreamCall mPushStreamCallBack;
+    private final Activity mContext;
     private String mPushurl;
     public int[] m_aiBufferLength;
     public AudioCaptureInterface mAudioCapture = new AudioCapture();
@@ -87,13 +95,17 @@ public class RtmpPushStreamer extends
     private RandomAccessFile file;
     private boolean nativeInt;
     private boolean speak;
+    private boolean beautyEffect;
 
 
     public RtmpPushStreamer(Activity context, SurfaceView surfaceView, PushStreamCall pushStreamCallBack) {
         mSurfaceHolder = surfaceView.getHolder();
+        this.mContext=context;
         mPushStreamCallBack = pushStreamCallBack;
         File externalStorageDirectory = Environment.getExternalStorageDirectory();
         surfaceView.getHolder().addCallback(this);
+        NativeCrashHandler nativeCrashHandler = new NativeCrashHandler();
+        nativeCrashHandler.registerForNativeCrash(context.getApplicationContext());
 
         videoFile = new File(externalStorageDirectory, "video.yuv");
         audioFile = new File(externalStorageDirectory, "audio.pcm");
@@ -118,6 +130,7 @@ public class RtmpPushStreamer extends
 
     /**
      * 初始化Native采集
+     *
      * @return
      */
     private boolean initCapture() {
@@ -137,6 +150,7 @@ public class RtmpPushStreamer extends
 
     /**
      * 初始化native编码器
+     *
      * @return
      */
     private boolean initEncoder() {
@@ -171,6 +185,7 @@ public class RtmpPushStreamer extends
 
     /**
      * 开启推流
+     *
      * @param pushUrl
      * @return
      */
@@ -189,8 +204,10 @@ public class RtmpPushStreamer extends
 
     /**
      * 开始直播
+     *
      * @param Pushurl
      */
+    @RequiresPermission(allOf = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO})
     public void startSpeak(String Pushurl) {
         mPushurl = Pushurl;
         if (!speak) {
@@ -224,6 +241,7 @@ public class RtmpPushStreamer extends
 
     /**
      * 锁毁推流器
+     *
      * @return
      */
     public boolean destroy() {
@@ -375,6 +393,8 @@ public class RtmpPushStreamer extends
         byte[] m_RotateData = new byte[mVideoSizeConfig.srcFrameWidth
                 * mVideoSizeConfig.srcFrameHeight * 3 / 2];
         byte[] m_MirrorData = new byte[mVideoSizeConfig.srcFrameWidth
+                * mVideoSizeConfig.srcFrameHeight * 3 / 2];
+        byte[] m_BeautyData = new byte[mVideoSizeConfig.srcFrameWidth
                 * mVideoSizeConfig.srcFrameHeight * 3 / 2];
 
         @Override
@@ -601,6 +621,15 @@ public class RtmpPushStreamer extends
             LiveJniMediaManager.SetCameraID(LiveJniMediaManager.CameraID.FRONT.ordinal());
         }
         switchCamera(curCameraType, currentMicIndex);
+    }
+
+    public void switchBeauty() {
+        beautyEffect = !beautyEffect;
+        if(beautyEffect) {
+            Toast.makeText(mContext, "开启美颜", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(mContext, "关闭美颜", Toast.LENGTH_LONG).show();
+        }
     }
 
 

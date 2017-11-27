@@ -101,7 +101,9 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         ((Switch) findViewById(R.id.swBeauty)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+                if (null != mRtmpPushStreamer) {
+                    mRtmpPushStreamer.switchBeauty();
+                }
             }
         });
         btnStart = (Button) findViewById(R.id.btnStart);

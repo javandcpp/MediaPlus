@@ -70,6 +70,6 @@ dependencies {
     })
     compile supportDependencies["appCompatV7"]
     testCompile testDependecencies["junit"]
-    compile project(':libraries:applicationmanagement')
+    compile project(':libraries:appmanagement')
     compile files('libs/avcapture.jar')
 }

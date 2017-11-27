@@ -38,6 +38,11 @@ set_target_properties(ffmpeg
                       PROPERTIES
                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libffmpeg.so)
 
+add_library(opencv SHARED IMPORTED)
+set_target_properties(opencv
+                      PROPERTIES
+                      IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libopencv_java3.so)
+
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
@@ -75,5 +80,4 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 
-#target_link_libraries(Media  ${log-lib} avcodec avfilter avformat avutil swresample swscale avdevice avpostproc yuv log android)
-target_link_libraries(Media  ${log-lib} libyuv ffmpeg log android)
+target_link_libraries(Media  ${log-lib} libyuv ffmpeg opencv log android)
