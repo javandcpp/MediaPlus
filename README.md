@@ -14,7 +14,7 @@
 </div>
 
 
-
+* Rtmp推流截图
 <div align=center>
 <table border=0 cellspacing="10" style="border-collapse:separate; border-spacing:0px 50px;">
 <td>
