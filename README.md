@@ -4,7 +4,7 @@
 <img width="100" height="100" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaPlus_2.png"/>
 </div>
 
-#### android 音视频采集与直播：
+#### android 音视频采集与推流：
 * [releases](https://github.com/javandoc/MediaPlus/releases/)
 
 * [文档链接](https://juejin.im/user/5809cf500bd1d00057ddc475)
