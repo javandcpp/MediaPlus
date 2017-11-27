@@ -4,7 +4,7 @@
 <img width="100" height="100" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/MediaPlus_2.png"/>
 </div>
 
-#### android 音视频采集与直播SDK：
+#### android 音视频采集与直播：
 * [v1.0 采集音视频并处理数据转换与编码，Rtmp推流](https://github.com/javandoc/MediaPlus/releases/tag/v1.0)
 
 * [文档链接](https://juejin.im/user/5809cf500bd1d00057ddc475)
