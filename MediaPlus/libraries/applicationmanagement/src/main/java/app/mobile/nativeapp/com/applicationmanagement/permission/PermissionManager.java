@@ -49,6 +49,7 @@ public class PermissionManager {
 
 
     private static Activity mActivity;
+    private static SoftReference<Activity> activitySoftReference;
 
     private PermissionManager() {
 
@@ -57,8 +58,7 @@ public class PermissionManager {
     private static PermissionManager instance = null;
 
     public static PermissionManager getInstance(Activity activity) {
-        SoftReference<Activity> activitySoftReference = new SoftReference<>(activity);
-        mActivity = activitySoftReference.get();
+        activitySoftReference = new SoftReference<>(activity);
         if (null == instance) {
             instance = new PermissionManager();
         }
@@ -70,7 +70,7 @@ public class PermissionManager {
     public void permissonCheck(final PermissionCheckResult permissionCheckResult, String... permissions) {
         final boolean[] results = new boolean[permissions.length];
         final int[] index = {0};
-        new RxPermissions(mActivity).requestEach(permissions).subscribe(new Consumer<Permission>() {
+        new RxPermissions(activitySoftReference.get()).requestEach(permissions).subscribe(new Consumer<Permission>() {
             @Override
             public void accept(Permission permission) throws Exception {
                 if (null != permissionCheckResult) {
