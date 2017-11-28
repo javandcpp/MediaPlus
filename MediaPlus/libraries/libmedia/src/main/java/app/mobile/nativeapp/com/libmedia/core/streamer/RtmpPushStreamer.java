@@ -47,7 +47,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.List;
 
-import app.mobile.nativeapp.com.applicationmanagement.permission.PermissionManager;
 import app.mobile.nativeapp.com.libmedia.core.config.VideoSizeConfig;
 import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;

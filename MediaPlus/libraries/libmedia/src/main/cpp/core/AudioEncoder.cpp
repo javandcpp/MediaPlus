@@ -159,6 +159,8 @@ int AudioEncoder::StartEncode() {
 int AudioEncoder::InitEncode() {
     std::lock_guard<std::mutex> lk(mut);
     avCodec = avcodec_find_encoder_by_name("libfdk_aac");
+
+
     int ret = 0;
     if (!avCodec) {
         LOG_D(DEBUG, "aac encoder not found!")

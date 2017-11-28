@@ -54,6 +54,7 @@ android {
             jniDebuggable true
         }
         debug {
+            debuggable true
             jniDebuggable true
         }
     }

@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
@@ -119,36 +120,37 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnSwitchCamera).setOnClickListener(this);
         tvAudio = ((TextView) findViewById(R.id.tvAudioInfo));
         tvVideo = ((TextView) findViewById(R.id.tvVideoInfo));
-
         PermissionManager.getInstance(this).permissonCheck(new PermissionCheckResult() {
             @Override
-            public void granted() {
-                SurfaceView surfaceView = new SurfaceView(LiveActivity.this);
-                mRtmpPushStreamer = new RtmpPushStreamer(LiveActivity.this, surfaceView, new PushStreamCall() {
-                    @Override
-                    public void PushSucess() {
-                        btnStart.setText("停止直播");
-                        Toast.makeText(getApplicationContext(), "推流成功", Toast.LENGTH_LONG).show();
-                        mHandler.sendEmptyMessage(SUCCESS);
-                    }
+            public void granted(boolean[] results) {
+                if (results.length == 3 && results[0] && results[1] && results[2]) {
+                    SurfaceView surfaceView = new SurfaceView(LiveActivity.this);
+                    mRtmpPushStreamer = new RtmpPushStreamer(LiveActivity.this, surfaceView, new PushStreamCall() {
+                        @Override
+                        public void PushSucess() {
+                            btnStart.setText("停止直播");
+                            Toast.makeText(getApplicationContext(), "推流成功", Toast.LENGTH_LONG).show();
+                            mHandler.sendEmptyMessage(SUCCESS);
+                        }
 
-                    @Override
-                    public void PushFailed() {
-                        btnStart.setText("开始直播");
-                        Toast.makeText(getApplicationContext(), "推流失败", Toast.LENGTH_LONG).show();
-                    }
-                });
+                        @Override
+                        public void PushFailed() {
+                            btnStart.setText("开始直播");
+                            Toast.makeText(getApplicationContext(), "推流失败", Toast.LENGTH_LONG).show();
+                        }
+                    });
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
-                    surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(displayMetrics.widthPixels, displayMetrics.heightPixels));
-                } else {
-                    int width = getWindowManager().getDefaultDisplay().getWidth();
-                    int height = getWindowManager().getDefaultDisplay().getHeight();
-                    surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        DisplayMetrics displayMetrics = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
+                        surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(displayMetrics.widthPixels, displayMetrics.heightPixels));
+                    } else {
+                        int width = getWindowManager().getDefaultDisplay().getWidth();
+                        int height = getWindowManager().getDefaultDisplay().getHeight();
+                        surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+                    }
+                    videoParent.addView(surfaceView);
                 }
-                videoParent.addView(surfaceView);
             }
 
             @Override

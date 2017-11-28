@@ -35,9 +35,11 @@ public interface PermissionCheckResult {
 
 
     //权限已授权
-    void granted();
+    void granted(boolean[] results);
+
     //权限被拒绝
     void beDenied();
+
     //权限被拒绝,无询问
     void beDeniedWithoutHint();
 }

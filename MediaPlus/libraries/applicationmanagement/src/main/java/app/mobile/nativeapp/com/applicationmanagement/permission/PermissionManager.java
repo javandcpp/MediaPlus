@@ -32,6 +32,7 @@ import android.app.Activity;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 
 import app.mobile.nativeapp.com.applicationmanagement.inter.PermissionCheckResult;
@@ -47,18 +48,19 @@ import static okhttp3.internal.Internal.instance;
 public class PermissionManager {
 
 
-    private Activity mActivity;
+    private static Activity mActivity;
 
-    private PermissionManager(Activity activity) {
-        mActivity = new WeakReference<Activity>(activity).get();
-        rxPermissions = new RxPermissions(mActivity);
+    private PermissionManager() {
+
     }
 
     private static PermissionManager instance = null;
 
     public static PermissionManager getInstance(Activity activity) {
+        SoftReference<Activity> activitySoftReference = new SoftReference<>(activity);
+        mActivity = activitySoftReference.get();
         if (null == instance) {
-            instance = new PermissionManager(activity);
+            instance = new PermissionManager();
         }
         return instance;
     }
@@ -66,12 +68,15 @@ public class PermissionManager {
     private RxPermissions rxPermissions;
 
     public void permissonCheck(final PermissionCheckResult permissionCheckResult, String... permissions) {
-        rxPermissions.requestEach(permissions).subscribe(new Consumer<Permission>() {
+        final boolean[] results = new boolean[permissions.length];
+        final int[] index = {0};
+        new RxPermissions(mActivity).requestEach(permissions).subscribe(new Consumer<Permission>() {
             @Override
             public void accept(Permission permission) throws Exception {
                 if (null != permissionCheckResult) {
                     if (permission.granted) {
-                        permissionCheckResult.granted();
+                        results[index[0]++] = true;
+                        permissionCheckResult.granted(results);
                     } else if (permission.shouldShowRequestPermissionRationale) {
                         permissionCheckResult.beDenied();
                     } else {
