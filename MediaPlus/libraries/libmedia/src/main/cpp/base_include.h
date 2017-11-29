@@ -7,9 +7,9 @@
 #define NATIVEAPP_BASE_INCLUDE_H
 
 
-#include <stdio.h>
 #include <jni.h>
-#include <string.h>
+#include <iostream>
+#include <string>
 #include "core/debug.h"
 #include <android/log.h>
 #include "core/threadsafe_queue.cpp"
