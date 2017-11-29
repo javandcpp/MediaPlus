@@ -12,6 +12,7 @@
 #include <string>
 #include "core/debug.h"
 #include <android/log.h>
+
 #include "core/threadsafe_queue.cpp"
 
 #ifdef __cplusplus
@@ -20,6 +21,7 @@ extern "C" {
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <malloc.h>
 #include "ffmpeg/libavfilter/avfiltergraph.h"
 #include "ffmpeg/libavfilter/buffersink.h"
 #include "ffmpeg/libavfilter/buffersrc.h"

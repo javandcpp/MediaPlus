@@ -5,4 +5,4 @@
 #include "debug.h"
 
 
-int DEBUG=1;
+int DEBUG=0;
