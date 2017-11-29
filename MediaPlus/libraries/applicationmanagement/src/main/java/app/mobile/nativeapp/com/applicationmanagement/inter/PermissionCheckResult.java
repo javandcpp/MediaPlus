@@ -32,14 +32,10 @@ package app.mobile.nativeapp.com.applicationmanagement.inter;
  */
 
 public interface PermissionCheckResult {
-
-
     //权限已授权
-    void granted(boolean[] results);
+    void granted();
 
     //权限被拒绝
     void beDenied();
 
-    //权限被拒绝,无询问
-    void beDeniedWithoutHint();
 }

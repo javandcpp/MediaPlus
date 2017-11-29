@@ -8,8 +8,13 @@
 #include "MediaEncoder.h"
 #include "../PrefixHeader.h"
 #include "VideoCapture.h"
+#include "DrawTextFilter.h"
+
+#include <string>
+#include <iostream>
 
 #include <list>
+
 using namespace std;
 
 class VideoEncoder : public MediaEncoder {
@@ -17,13 +22,13 @@ class VideoEncoder : public MediaEncoder {
 private:
     VideoCapture *videoCapture = NULL;
 
+    /**
+  *
+  */
+    int InitFilter();
+
 public:
-    AVCodec *avCodec = NULL;
-    AVStream *outStream = NULL;
-    AVFrame *vOutFrame = NULL;
-    AVCodecContext *videoCodecContext = NULL;
-    AVFrame *outputYUVFrame = NULL;
-    AVPacket videoPacket = {0};
+
 
     bool isEncoding = false;
 
@@ -36,6 +41,8 @@ public:
      */
     threadsafe_queue<OriginData *> vframeQueue;
 //    list<OriginData *> VideoDatalist;
+
+    DrawTextFilter *drawTextFilter = nullptr;
 
     VideoEncoder();
 
@@ -83,6 +90,37 @@ public:
      * 前置镜像
      */
     void YUVProcessMirror();
+
+    /**
+     * 初始化过滤器
+     */
+    int SetFilter(DrawTextFilter *drawTextFilter);
+
+    AVCodec *avCodec = NULL;
+
+    AVStream *outStream = NULL;
+
+    AVFrame *vOutFrame = NULL;
+
+    AVCodecContext *videoCodecContext = NULL;
+
+    AVFrame *outputYUVFrame = NULL;
+
+    AVFrame *inputYUVFrame = NULL;
+
+    AVPacket videoPacket = {0};
+
+    AVFilter *buffersrc = nullptr;
+
+    AVFilter *buffersink = nullptr;
+
+    AVFilterInOut *outputs= nullptr;
+    AVFilterInOut *inputs= nullptr;
+    AVFilterGraph *filter_graph= nullptr;
+
+    AVFilterContext *buffersink_ctx  = nullptr;;
+    AVFilterContext *buffersrc_ctx  = nullptr;;
+
 
 
 };

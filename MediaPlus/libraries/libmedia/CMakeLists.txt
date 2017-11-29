@@ -40,9 +40,6 @@ set_target_properties(ffmpeg
 
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-
-
 file(GLOB native_core_srcs "src/main/cpp/core/*.cpp")
 file(GLOB native_jni_srcs "src/main/cpp/jni/*.cpp")
 add_library( # Sets the name of the library.

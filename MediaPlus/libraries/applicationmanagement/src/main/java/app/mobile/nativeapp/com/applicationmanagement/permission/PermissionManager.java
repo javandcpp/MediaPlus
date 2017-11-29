@@ -28,6 +28,8 @@
 package app.mobile.nativeapp.com.applicationmanagement.permission;
 
 import android.app.Activity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -37,6 +39,7 @@ import java.lang.ref.WeakReference;
 
 import app.mobile.nativeapp.com.applicationmanagement.inter.PermissionCheckResult;
 import io.reactivex.functions.Consumer;
+import rx.functions.Action1;
 
 import static okhttp3.internal.Internal.instance;
 
@@ -70,17 +73,16 @@ public class PermissionManager {
     public void permissonCheck(final PermissionCheckResult permissionCheckResult, String... permissions) {
         final boolean[] results = new boolean[permissions.length];
         final int[] index = {0};
-        new RxPermissions(activitySoftReference.get()).requestEach(permissions).subscribe(new Consumer<Permission>() {
+        new RxPermissions(activitySoftReference.get()).request(permissions).subscribe(new Consumer<Boolean>() {
             @Override
-            public void accept(Permission permission) throws Exception {
-                if (null != permissionCheckResult) {
-                    if (permission.granted) {
-                        results[index[0]++] = true;
-                        permissionCheckResult.granted(results);
-                    } else if (permission.shouldShowRequestPermissionRationale) {
+            public void accept(Boolean aBoolean) throws Exception {
+                if(aBoolean) {
+                    if(null!=permissionCheckResult){
+                        permissionCheckResult.granted();
+                    }
+                }else{
+                    if(null!=permissionCheckResult){
                         permissionCheckResult.beDenied();
-                    } else {
-                        permissionCheckResult.beDeniedWithoutHint();
                     }
                 }
             }

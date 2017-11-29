@@ -5,8 +5,7 @@
 #ifndef NATIVEAPP_PREFIXHEADER_H
 #define NATIVEAPP_PREFIXHEADER_H
 
-
-#include <string>
+#include <iostream>
 #include <mutex>
 #include <memory>
 #include <condition_variable>

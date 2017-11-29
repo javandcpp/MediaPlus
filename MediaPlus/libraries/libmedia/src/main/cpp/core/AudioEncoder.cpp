@@ -175,7 +175,7 @@ int AudioEncoder::InitEncode() {
     audioCodecContext->sample_fmt = AV_SAMPLE_FMT_S16;
     audioCodecContext->sample_rate = audioCapture->GetAudioEncodeArgs()->sampleRate;
     audioCodecContext->thread_count = 8;
-    audioCodecContext->bit_rate = 50*1024*8;
+    audioCodecContext->bit_rate = 50 * 1024 * 8;
     audioCodecContext->channels = audioCapture->GetAudioEncodeArgs()->channels;
     audioCodecContext->frame_size = audioCapture->GetAudioEncodeArgs()->nb_samples;
     audioCodecContext->time_base = {1, 1000000};//AUDIO VIDEO 两边时间基数要相同
@@ -215,6 +215,7 @@ int AudioEncoder::CloseEncode() {
     std::lock_guard<std::mutex> lk(mut);
     if (isEncoding) {
         isEncoding = false;
+        avcodec_close(audioCodecContext);
         LOG_D(DEBUG, "Close Audio Encode!")
     }
     return 0;
