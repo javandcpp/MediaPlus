@@ -347,11 +347,12 @@ int VideoEncoder::InitFilter() {
     outputs = avfilter_inout_alloc();
     inputs = avfilter_inout_alloc();
 
-//    StringUtils<int> stringUtils;
+    StringUtils<int> stringUtils;
     std::string filters_descr = "drawtext=fontsize=100:";
-//    filters_descr.append("text=").append(drawTextFilter->mContext).append(":x=").append(
-//            stringUtils.to_string(drawTextFilter->x)).append(":y=").append(
-//            stringUtils.to_string(drawTextFilter->y));
+    filters_descr.append("text=").append(drawTextFilter->mContext).append(":x=").append(
+            stringUtils.to_string(drawTextFilter->x)).append(":y=").append(
+            stringUtils.to_string(drawTextFilter->y));
+
     LOG_D(DEBUG, "filter text:%s", filters_descr.c_str());
     enum AVPixelFormat pix_fmts[] = {AV_PIX_FMT_YUV420P, AV_PIX_FMT_YUV420P};
     filter_graph = avfilter_graph_alloc();

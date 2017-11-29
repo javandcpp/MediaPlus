@@ -15,9 +15,7 @@ private:
 public:
     ~FilterFactory();
 
-//    mutable mutex mut;
-
-    MediaFilter *drawTextFilter= nullptr;
+    mutable mutex mut;
 
     static FilterFactory *Get();
 

@@ -29,6 +29,7 @@ package app.mobile.nativeapp.com.applicationmanagement.permission;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -75,7 +76,15 @@ public class PermissionManager {
         new RxPermissions(activitySoftReference.get()).request(permissions).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
-                Log.d("permission",aBoolean+"");
+                if(aBoolean) {
+                    if(null!=permissionCheckResult){
+                        permissionCheckResult.granted();
+                    }
+                }else{
+                    if(null!=permissionCheckResult){
+                        permissionCheckResult.beDenied();
+                    }
+                }
             }
         });
     }
