@@ -18,8 +18,8 @@ FilterFactory *FilterFactory::Get() {
     return &filterFactory;
 }
 
-DrawTextFilter *FilterFactory::createDrawTextFilter(string context, int x, int y) {
+DrawTextFilter *FilterFactory::createDrawTextFilter(const char *fontPath,const char *context, int *x, int *y) {
     std::lock_guard<std::mutex> lk(mut);
-    return shared_ptr<DrawTextFilter>(new DrawTextFilter(context, x, y)).get();
+    return new DrawTextFilter(fontPath,context, x, y);
 }
 

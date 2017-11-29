@@ -19,7 +19,7 @@ public:
 
     static FilterFactory *Get();
 
-    DrawTextFilter *createDrawTextFilter(string context,int x,int y);
+    DrawTextFilter *createDrawTextFilter(const char *fontPath, const char *context, int *x, int *y);
 
 };
 

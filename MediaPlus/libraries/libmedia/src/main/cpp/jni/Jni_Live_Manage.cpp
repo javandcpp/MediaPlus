@@ -269,18 +269,21 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_SetCameraID(
 }
 
 JNIEXPORT jint JNICALL
-Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_DrawTextFilter(JNIEnv *env,
-                                                                                   jclass type,
-                                                                                   jstring text_,
-                                                                                   jint x, jint y) {
+Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_DrawText(JNIEnv *env,
+                                                                             jclass type,
+                                                                             jstring fontPath_,
+                                                                             jstring text_,
+                                                                             jint x, jint y) {
     const char *text = env->GetStringUTFChars(text_, 0);
-    if(NULL!=videoEncoder){
-        FilterFactory *filterFactory=FilterFactory::Get();
-        DrawTextFilter *pTextFilter = filterFactory->createDrawTextFilter(text, x, y);
-        videoEncoder->SetFilter(pTextFilter);
+    const char *fontPath = env->GetStringUTFChars(fontPath_, 0);
+    int ret = 0;
+    if (NULL != videoEncoder) {
+        FilterFactory *filterFactory = FilterFactory::Get();
+        DrawTextFilter *pTextFilter = filterFactory->createDrawTextFilter(fontPath,text, &x, &y);
+        ret = videoEncoder->SetFilter(pTextFilter);
     }
     env->ReleaseStringUTFChars(text_, text);
-    return 0;
+    return ret;
 }
 
 

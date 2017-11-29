@@ -33,4 +33,5 @@ bool isRelease = false;
 bool startStream;
 
 mutex mMutex;
+
 #endif

@@ -42,7 +42,7 @@ public:
     threadsafe_queue<OriginData *> vframeQueue;
 //    list<OriginData *> VideoDatalist;
 
-    DrawTextFilter *drawTextFilter = nullptr;
+    DrawTextFilter **drawTextFilter = nullptr;
 
     VideoEncoder();
 

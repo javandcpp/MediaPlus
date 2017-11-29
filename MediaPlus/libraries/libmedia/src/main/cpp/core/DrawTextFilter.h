@@ -8,15 +8,18 @@
 #ifndef MEDIAPLUS_DRAWTEXTFILTER_H
 #define MEDIAPLUS_DRAWTEXTFILTER_H
 
-class DrawTextFilter :public MediaFilter{
+class DrawTextFilter : public MediaFilter {
 
 
 public:
-    DrawTextFilter(std::string context,int x,int y);
+    DrawTextFilter(const char *fontFilePath, const char *context, int *x, int *y);
+
     ~DrawTextFilter();
-    int x=0;
-    int y=0;
-    string mContext="";
+
+    int *x = nullptr;
+    int *y = nullptr;
+    const char *mContext = nullptr;
+    const char *fontFilePath = nullptr;
 };
 
 #endif //MEDIAPLUS_DRAWTEXTFILTER_H

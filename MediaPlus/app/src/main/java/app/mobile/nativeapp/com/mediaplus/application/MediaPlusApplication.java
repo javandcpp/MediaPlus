@@ -30,7 +30,12 @@ package app.mobile.nativeapp.com.mediaplus.application;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Vector;
 
 import app.mobile.nativeapp.com.applicationmanagement.base.ApplicationFramework;
@@ -51,6 +56,12 @@ public class MediaPlusApplication extends Application implements Application.Act
         mStack = new Vector<>();
         ApplicationFramework.injectContext(this);
         registerActivityLifecycleCallbacks(this);
+        new Thread() {
+            @Override
+            public void run() {
+                copyData();
+            }
+        }.start();
     }
 
     @Override
@@ -89,6 +100,45 @@ public class MediaPlusApplication extends Application implements Application.Act
     public void onActivityDestroyed(Activity activity) {
         if (mStack.contains(activity)) {
             mStack.remove(activity);
+        }
+
+    }
+
+    private void copyData() {
+        InputStream in = null;
+        FileOutputStream out = null;
+        String path = this.getApplicationContext().getFilesDir()
+                .getAbsolutePath() + "/font1.ttf"; // data/data目录
+        File file = new File(path);
+        if (!file.exists()) {
+            try {
+                in = this.getAssets().open("fonts/FreeSerif1.ttf"); // 从assets目录下复制
+                out = new FileOutputStream(file);
+                int length = -1;
+                byte[] buf = new byte[2048];
+                while ((length = in.read(buf)) != -1) {
+                    out.write(buf, 0, length);
+                }
+                out.flush();
+                Log.d("copydata", "copy font file!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
         }
     }
 }
