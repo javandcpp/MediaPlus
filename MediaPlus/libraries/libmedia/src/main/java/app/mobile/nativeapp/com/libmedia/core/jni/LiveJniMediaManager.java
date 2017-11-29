@@ -130,4 +130,15 @@ public class LiveJniMediaManager {
      * @param cameraID  相机ID
      */
     public static native void SetCameraID(int cameraID);
+
+
+    /**
+     * 视频添加文字
+     * @param text
+     * @param x
+     * @param y
+     * @return
+     */
+    public static native int DrawTextFilter(String text,int x,int y);
+
 }

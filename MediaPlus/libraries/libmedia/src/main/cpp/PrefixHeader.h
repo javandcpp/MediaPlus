@@ -6,12 +6,14 @@
 #define NATIVEAPP_PREFIXHEADER_H
 
 #include <iostream>
+#include <sstream>
 #include <mutex>
 #include <memory>
 #include <condition_variable>
 #include "core/VideoEncodeArgs.h"
 #include "base_include.h"
 #include "core/AudioEncodeArgs.h"
+
 
 
 using namespace std;

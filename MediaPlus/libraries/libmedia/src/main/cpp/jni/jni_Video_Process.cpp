@@ -21,7 +21,6 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LibJniVideoProcess_NV21TOI420(JN
 
     VideoProcess::NV21TOI420(in_width, in_height, (const uint8_t *) srcData,
                              (uint8_t *) dstData);
-
     return 0;
 }
 

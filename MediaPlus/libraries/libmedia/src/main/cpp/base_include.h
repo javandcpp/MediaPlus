@@ -7,9 +7,9 @@
 #define NATIVEAPP_BASE_INCLUDE_H
 
 
-#include <stdio.h>
+
 #include <jni.h>
-#include <string.h>
+#include <string>
 #include "core/debug.h"
 #include <android/log.h>
 #include "core/threadsafe_queue.cpp"
@@ -17,7 +17,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#include <stdio.h>
 #include "ffmpeg/libavcodec/avcodec.h"
 #include "ffmpeg/libavformat/avformat.h"
 #include "ffmpeg/libavutil/opt.h"

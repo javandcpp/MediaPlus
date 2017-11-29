@@ -4,6 +4,7 @@
 
 
 #include "VideoEncoder.h"
+#include "StringUtils.h"
 
 
 VideoEncoder *VideoEncoder::Get() {
@@ -51,6 +52,14 @@ VideoEncoder::~VideoEncoder() {
         avcodec_free_context(&videoCodecContext);
         videoCodecContext = NULL;
     }
+    if (nullptr != buffersrc) {
+        av_free(buffersrc);
+        buffersrc = nullptr;
+    }
+    if (nullptr != buffersink) {
+        av_free(buffersink);
+        buffersink = nullptr;
+    }
 
     LOG_D(DEBUG, "delete VideoEncoder");
 }
@@ -73,6 +82,9 @@ int VideoEncoder::EncodeH264(OriginData **originData) {
                          outputYUVFrame->linesize, (*originData)->data,
                          AV_PIX_FMT_YUV420P, videoCodecContext->width,
                          videoCodecContext->height, 1);
+    //文字添加
+
+
     outputYUVFrame->pts = (*originData)->pts;
     int ret = 0;
     ret = avcodec_send_frame(videoCodecContext, outputYUVFrame);
@@ -251,10 +263,10 @@ int VideoEncoder::InitEncode() {
         videoCodecContext->time_base = {1, 1000000};//AUDIO VIDEO 两边时间基数要相同
         videoCodecContext->pix_fmt = AV_PIX_FMT_YUV420P;
 
-        videoCodecContext->level=41;
-        videoCodecContext->me_method=ME_HEX;
-        videoCodecContext->refs=1;
-        videoCodecContext->chromaoffset=2;
+        videoCodecContext->level = 41;
+        videoCodecContext->me_method = ME_HEX;
+        videoCodecContext->refs = 1;
+        videoCodecContext->chromaoffset = 2;
     }
 
     /**
@@ -312,7 +324,62 @@ int VideoEncoder::CloseEncode() {
     std::lock_guard<std::mutex> lk(mut);
     if (isEncoding) {
         isEncoding = false;
+        avcodec_close(videoCodecContext);
         LOG_D(DEBUG, "Close Video Encode!")
     }
     return 0;
+}
+
+int VideoEncoder::SetFilter(DrawTextFilter *drawTextFilter) {
+    this->drawTextFilter = drawTextFilter;
+    InitFilter();
+    return 0;
+}
+
+/**
+ * 初始化过滤器
+ */
+int VideoEncoder::InitFilter() {
+    char args[512];
+
+    buffersrc = avfilter_get_by_name("buffer");
+    buffersink = avfilter_get_by_name("buffersink");
+    outputs = avfilter_inout_alloc();
+    inputs = avfilter_inout_alloc();
+
+//    StringUtils<int> stringUtils;
+    std::string filters_descr = "drawtext=fontsize=100:";
+//    filters_descr.append("text=").append(drawTextFilter->mContext).append(":x=").append(
+//            stringUtils.to_string(drawTextFilter->x)).append(":y=").append(
+//            stringUtils.to_string(drawTextFilter->y));
+    LOG_D(DEBUG, "filter text:%s", filters_descr.c_str());
+    enum AVPixelFormat pix_fmts[] = {AV_PIX_FMT_YUV420P, AV_PIX_FMT_YUV420P};
+    filter_graph = avfilter_graph_alloc();
+    if (!outputs || !inputs || !filter_graph) {
+        LOG_D(DEBUG, "avfilter_graph_alloc failed!");
+        return -1;
+    }
+
+    int ret = 0;
+    ret = avfilter_graph_create_filter(&buffersrc_ctx, buffersrc, "in",
+                                       args, NULL, filter_graph);
+    if (ret < 0) {
+        av_log(NULL, AV_LOG_ERROR, "Cannot create buffer source\n");
+        goto end;
+    }
+
+    /* buffer video sink: to terminate the filter chain. */
+    ret = avfilter_graph_create_filter(&buffersink_ctx, buffersink, "out",
+                                       NULL, NULL, filter_graph);
+    if (ret < 0) {
+        av_log(NULL, AV_LOG_ERROR, "Cannot create buffer sink\n");
+        goto end;
+    }
+    return ret;
+
+    end:
+    avfilter_inout_free(&inputs);
+    avfilter_inout_free(&outputs);
+    return ret;
+
 }

@@ -10,15 +10,15 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-//        externalNativeBuild {
-//            cmake {
-//                cppFlags "-std=c++11"
-//            }
-//        }
-//
-//        ndk {
-//            abiFilters 'armeabi-v7a'
-//        }
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11"
+            }
+        }
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
     buildTypes {
         release {

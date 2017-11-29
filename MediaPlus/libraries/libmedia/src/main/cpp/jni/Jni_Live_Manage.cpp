@@ -6,6 +6,7 @@
  */
 #include <jni.h>
 #include "jni_Live_Manage.h"
+#include "../core/FilterFactory.h"
 
 
 #ifdef __cplusplus
@@ -266,6 +267,22 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_SetCameraID(
     }
     return;
 }
+
+JNIEXPORT jint JNICALL
+Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_DrawTextFilter(JNIEnv *env,
+                                                                                   jclass type,
+                                                                                   jstring text_,
+                                                                                   jint x, jint y) {
+    const char *text = env->GetStringUTFChars(text_, 0);
+    if(NULL!=videoEncoder){
+        FilterFactory *filterFactory=FilterFactory::Get();
+        DrawTextFilter *pTextFilter = filterFactory->createDrawTextFilter(text, x, y);
+        videoEncoder->SetFilter(pTextFilter);
+    }
+    env->ReleaseStringUTFChars(text_, text);
+    return 0;
+}
+
 
 #ifdef __cplusplus
 }
