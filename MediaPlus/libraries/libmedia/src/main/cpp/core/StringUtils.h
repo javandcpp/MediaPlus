@@ -5,20 +5,16 @@
 #ifndef MEDIAPLUS_STRINGUTILS_H
 #define MEDIAPLUS_STRINGUTILS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#include <sstream>
-#include <iostream>
+#include<stdlib.h>
+#include<stdio.h>
 
-using namespace std;
 
-template<typename T>
-class StringUtils {
-public:
-    std::string to_string(T value) {
-        std::ostringstream os;
-        os << value;
-        return os.str();
-    }
-};
+#ifdef __cplusplus
+}
+#endif
 
 #endif //MEDIAPLUS_STRINGUTILS_H

@@ -41,9 +41,11 @@ import com.guagua.avcapture.VideoCaptureInterface;
 import com.guagua.avcapture.impl.AudioCapture;
 import com.guagua.avcapture.impl.VideoCapture;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.List;
 
@@ -52,6 +54,7 @@ import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
 import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
 
+import static android.R.id.list;
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
 
 /**
@@ -63,6 +66,7 @@ public class RtmpPushStreamer extends
 
     public final SurfaceHolder mSurfaceHolder;
     private final PushStreamCall mPushStreamCallBack;
+    private final Activity mContext;
     private String mPushurl;
     public int[] m_aiBufferLength;
     public AudioCaptureInterface mAudioCapture = new AudioCapture();
@@ -92,6 +96,7 @@ public class RtmpPushStreamer extends
 
 
     public RtmpPushStreamer(Activity context, SurfaceView surfaceView, PushStreamCall pushStreamCallBack) {
+        mContext = context;
         mSurfaceHolder = surfaceView.getHolder();
         mPushStreamCallBack = pushStreamCallBack;
         File externalStorageDirectory = Environment.getExternalStorageDirectory();
@@ -122,6 +127,7 @@ public class RtmpPushStreamer extends
 
     /**
      * 初始化Native采集
+     *
      * @return
      */
     private boolean initCapture() {
@@ -141,6 +147,7 @@ public class RtmpPushStreamer extends
 
     /**
      * 初始化native编码器
+     *
      * @return
      */
     private boolean initEncoder() {
@@ -168,13 +175,54 @@ public class RtmpPushStreamer extends
         if (!initEncoder()) {
             return false;
         }
+        //必须在initEncoder后调用
+        if (DrawText()) {
+            Log.d("initNative", "drawText success!");
+        }
         Log.d("initNative", "native init success!");
         nativeInt = true;
         return nativeInt;
     }
 
+    private byte[] InputStreamToByte(InputStream is) throws IOException {
+        ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
+        int ch;
+        while ((ch = is.read()) != -1) {
+            bytestream.write(ch);
+        }
+        byte imgdata[] = bytestream.toByteArray();
+        bytestream.close();
+        return imgdata;
+    }
+
+    /**
+     * 添加文字
+     *
+     * @return
+     */
+    private boolean DrawText() {
+        int ret = 0;
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(),"font1.ttf");
+
+            if (file.exists()) {
+                ret = LiveJniMediaManager.DrawText(file.getAbsolutePath().toString(), "swordman", 100, 100);
+                if (ret < 0) {
+                    return false;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return true;
+    }
+
     /**
      * 开启推流
+     *
      * @param pushUrl
      * @return
      */
@@ -193,9 +241,10 @@ public class RtmpPushStreamer extends
 
     /**
      * 开始直播
+     *
      * @param Pushurl
      */
-    @RequiresPermission(allOf = {Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO})
+    @RequiresPermission(allOf = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO})
     public void startSpeak(String Pushurl) {
         mPushurl = Pushurl;
         if (!speak) {
@@ -229,6 +278,7 @@ public class RtmpPushStreamer extends
 
     /**
      * 锁毁推流器
+     *
      * @return
      */
     public boolean destroy() {

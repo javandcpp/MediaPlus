@@ -5,6 +5,7 @@
 
 #include "VideoEncoder.h"
 #include "StringUtils.h"
+#include <stdio.h>
 
 
 VideoEncoder *VideoEncoder::Get() {
@@ -59,6 +60,18 @@ VideoEncoder::~VideoEncoder() {
     if (nullptr != buffersink) {
         av_free(buffersink);
         buffersink = nullptr;
+    }
+
+    if (nullptr != inputs) {
+        avfilter_inout_free(&inputs);
+        inputs = nullptr;
+    }
+    if (nullptr != outputs) {
+        avfilter_inout_free(&outputs);
+        outputs = nullptr;
+    }
+    if (nullptr != drawTextFilter) {
+        delete drawTextFilter;
     }
 
     LOG_D(DEBUG, "delete VideoEncoder");
@@ -331,29 +344,37 @@ int VideoEncoder::CloseEncode() {
 }
 
 int VideoEncoder::SetFilter(DrawTextFilter *drawTextFilter) {
-    this->drawTextFilter = drawTextFilter;
-    InitFilter();
-    return 0;
+    this->drawTextFilter = &drawTextFilter;
+    return InitFilter();
 }
 
 /**
  * 初始化过滤器
  */
 int VideoEncoder::InitFilter() {
-    char args[512];
-
+    char args[512] = {0};
+    //注意必须要调用avfilter_register_all()  否则avfilter_graph_create_filter  return -12
     buffersrc = avfilter_get_by_name("buffer");
     buffersink = avfilter_get_by_name("buffersink");
     outputs = avfilter_inout_alloc();
     inputs = avfilter_inout_alloc();
+    int ret = 0;
+    LOG_D(DEBUG, "this draw text filter font:%s context:%s x=%d,y=%d",
+          (*drawTextFilter)->fontFilePath, (*drawTextFilter)->mContext,
+          *(*drawTextFilter)->x, *(*drawTextFilter)->y);
+//
+//    char filters_descr[500] = {0};
+//    const char *filters_descr = "boxblur";
+    const char *filters_descr = "movie=/mnt/sccard/my_logo.png[wm];[in][wm]overlay=5:5[out]";
+//    const char* filters_descr = "drawtext=fontfile=/mnt/sdcard/font1.ttf:text=hello world";
 
-    StringUtils<int> stringUtils;
-    std::string filters_descr = "drawtext=fontsize=100:";
-    filters_descr.append("text=").append(drawTextFilter->mContext).append(":x=").append(
-            stringUtils.to_string(drawTextFilter->x)).append(":y=").append(
-            stringUtils.to_string(drawTextFilter->y));
+//    const char *filters_descr = "drawtext=fontfile=arial.ttf:fontcolor=green:fontsize=30:text='Lei Xiaohua'";
+//    snprintf(filters_descr, sizeof(filters_descr),
+//             "drawtext=fontfile=%s:fontsize=30:text=%s",
+//             (*drawTextFilter)->fontFilePath, (*drawTextFilter)->mContext);
+//
+    LOG_D(DEBUG, "filter text:%s", filters_descr);
 
-    LOG_D(DEBUG, "filter text:%s", filters_descr.c_str());
     enum AVPixelFormat pix_fmts[] = {AV_PIX_FMT_YUV420P, AV_PIX_FMT_YUV420P};
     filter_graph = avfilter_graph_alloc();
     if (!outputs || !inputs || !filter_graph) {
@@ -361,26 +382,80 @@ int VideoEncoder::InitFilter() {
         return -1;
     }
 
-    int ret = 0;
+
+    /* buffer video source: the decoded frames from the decoder will be inserted here. */
+    snprintf(args, sizeof(args),
+             "video_size=%dx%d:pix_fmt=%d:time_base=%d/%d:pixel_aspect=%d/%d",
+             videoCodecContext->width, videoCodecContext->height, videoCodecContext->pix_fmt,
+             videoCodecContext->time_base.num, videoCodecContext->time_base.den,
+             videoCodecContext->sample_aspect_ratio.num, videoCodecContext->sample_aspect_ratio.den
+    );
+
+
     ret = avfilter_graph_create_filter(&buffersrc_ctx, buffersrc, "in",
                                        args, NULL, filter_graph);
     if (ret < 0) {
-        av_log(NULL, AV_LOG_ERROR, "Cannot create buffer source\n");
+        char buf[102] = {0};
+        av_strerror(ret, buf, sizeof(buf));
+        LOG_D(DEBUG, "Cannot create buffer source\n info:%s", buf);
         goto end;
     }
 
-    /* buffer video sink: to terminate the filter chain. */
+    AVBufferSinkParams *buffersink_params;
+    buffersink_params = av_buffersink_params_alloc();
+    buffersink_params->pixel_fmts = pix_fmts;
     ret = avfilter_graph_create_filter(&buffersink_ctx, buffersink, "out",
-                                       NULL, NULL, filter_graph);
+                                       NULL, buffersink_params, filter_graph);
+    av_free(buffersink_params);
     if (ret < 0) {
-        av_log(NULL, AV_LOG_ERROR, "Cannot create buffer sink\n");
+        LOG_D(DEBUG, "Cannot create buffer sink\n");
         goto end;
     }
+
+
+//    ret = av_opt_set_int_list(buffersink_ctx, "pix_fmts", pix_fmts,
+//                              AV_PIX_FMT_YUV420P, AV_OPT_SEARCH_CHILDREN);
+//    if (ret < 0) {
+//        LOG_D(DEBUG, "Cannot set output pixel format\n");
+//        goto end;
+//    }
+
+    outputs->name = av_strdup("in");
+    outputs->filter_ctx = buffersrc_ctx;
+    outputs->pad_idx = 0;
+    outputs->next = NULL;
+
+    inputs->name = av_strdup("out");
+    inputs->filter_ctx = buffersink_ctx;
+    inputs->pad_idx = 0;
+    inputs->next = NULL;
+
+    if ((ret = avfilter_graph_parse_ptr(filter_graph, filters_descr,
+                                        &inputs, &outputs, NULL)) < 0) {
+        char buf[102] = {0};
+        av_strerror(ret, buf, sizeof(buf));
+        LOG_D(DEBUG, "avfilter_graph_parse_ptr failed info:%s", buf);
+        goto end;
+    }
+
+    if ((ret = avfilter_graph_config(filter_graph, NULL)) < 0) {
+        LOG_D(DEBUG, "avfilter_graph_config failed");
+        goto end;
+
+    }
+    LOG_D(DEBUG, "init filter success");
     return ret;
 
     end:
     avfilter_inout_free(&inputs);
     avfilter_inout_free(&outputs);
+    if (inputs != nullptr) {
+        inputs = nullptr;
+    }
+    if (outputs != nullptr) {
+        outputs = nullptr;
+    }
+
     return ret;
 
 }

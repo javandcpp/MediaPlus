@@ -22,6 +22,7 @@ void MediaEncoder::RegisterAVCodec() {
     if (first) {
         first = false;
         av_register_all();
+        avfilter_register_all();//
         RegisterAVNetwork();
         LOG_D(DEBUG, "MediaEncoder av_register_all success!");
         LOG_D(DEBUG, "MediaEncoder avformat_network_init success!");

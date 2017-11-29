@@ -18,6 +18,11 @@
 extern "C" {
 #endif
 #include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include "ffmpeg/libavfilter/avfiltergraph.h"
+#include "ffmpeg/libavfilter/buffersink.h"
+#include "ffmpeg/libavfilter/buffersrc.h"
 #include "ffmpeg/libavcodec/avcodec.h"
 #include "ffmpeg/libavformat/avformat.h"
 #include "ffmpeg/libavutil/opt.h"

@@ -139,6 +139,6 @@ public class LiveJniMediaManager {
      * @param y
      * @return
      */
-    public static native int DrawTextFilter(String text,int x,int y);
+    public static native int DrawText(String fontFilePath,String text,int x,int y);
 
 }
