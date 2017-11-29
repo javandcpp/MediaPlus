@@ -176,9 +176,6 @@ public class RtmpPushStreamer extends
             return false;
         }
         //必须在initEncoder后调用
-        if (DrawText()) {
-            Log.d("initNative", "drawText success!");
-        }
         Log.d("initNative", "native init success!");
         nativeInt = true;
         return nativeInt;
