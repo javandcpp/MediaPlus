@@ -5,7 +5,7 @@
  * JNI 底层推流
  */
 #include <jni.h>
-#include "jni_Live_Manage.h"
+#include "Jni_Live_Manage.h"
 #include "../core/FilterFactory.h"
 
 
