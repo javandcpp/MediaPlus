@@ -54,8 +54,8 @@ public class LiveJniMediaManager {
     /**
      * 初始化音频采集
      *
-     * @param channles    音频通道
-     * @param SampleRate  采样率
+     * @param channles      音频通道
+     * @param SampleRate    采样率
      * @param SampleBitRate 采样位数
      * @return
      */
@@ -77,7 +77,7 @@ public class LiveJniMediaManager {
     /**
      * 开启推流
      *
-     * @param url  推流地址
+     * @param url 推流地址
      * @return
      */
     public static native int StartPush(String url);
@@ -127,18 +127,37 @@ public class LiveJniMediaManager {
     /**
      * 设置摄像头
      *
-     * @param cameraID  相机ID
+     * @param cameraID 相机ID
      */
     public static native void SetCameraID(int cameraID);
 
 
     /**
      * 视频添加文字
+     *
      * @param text
      * @param x
      * @param y
      * @return
      */
-    public static native int DrawText(String fontFilePath,String text,int x,int y);
+    public static native int DrawText(String fontFilePath, String text, int x, int y);
+
+
+    /**
+     * water mark
+     * @param enable
+     * @param waterMark_
+     * @param waterWidth
+     * @param waterHeight
+     * @param positionX
+     * @param positionY
+     * @return
+     */
+    public static native int SetWaterMark(boolean enable,
+                                          byte[] waterMark_,
+                                          int waterWidth,
+                                          int waterHeight,
+                                          int positionX,
+                                          int positionY);
 
 }

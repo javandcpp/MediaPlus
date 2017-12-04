@@ -181,6 +181,12 @@ public class RtmpPushStreamer extends
         return nativeInt;
     }
 
+    private boolean SetWaterMark(){
+        int ret=0;
+
+        return false;
+    }
+
     private byte[] InputStreamToByte(InputStream is) throws IOException {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         int ch;
