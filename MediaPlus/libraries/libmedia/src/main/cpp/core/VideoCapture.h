@@ -64,6 +64,8 @@ public:
    */
     uint8_t *NV21ProcessYUV420P(int in_width, int in_height, int out_width, int out_heigth,
                                 uint8_t *src, uint8_t *dst, CameraID cameraID, int needMirror);
+
+    bool enableWaterMark;
 };
 
 #endif //NATIVEAPP_VIDEOCAPTURE_H

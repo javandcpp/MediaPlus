@@ -5,6 +5,7 @@
 
 #include "VideoEncoder.h"
 #include "StringUtils.h"
+#include "CombineVideoHelper.h"
 #include <stdio.h>
 
 
@@ -91,6 +92,10 @@ void VideoEncoder::YUVProcessMirror() {
 }
 
 int VideoEncoder::EncodeH264(OriginData **originData) {
+    if(GetVideoCapture()->enableWaterMark){
+        CombineVideoHelper::Instance()->CombineWaterMark(0,(*originData)->data);
+    }
+
     av_image_fill_arrays(outputYUVFrame->data,
                          outputYUVFrame->linesize, (*originData)->data,
                          AV_PIX_FMT_YUV420P, videoCodecContext->width,

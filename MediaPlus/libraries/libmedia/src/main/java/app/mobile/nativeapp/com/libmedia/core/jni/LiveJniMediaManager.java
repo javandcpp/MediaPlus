@@ -145,6 +145,7 @@ public class LiveJniMediaManager {
 
     /**
      * water mark
+     *
      * @param enable
      * @param waterMark_
      * @param waterWidth

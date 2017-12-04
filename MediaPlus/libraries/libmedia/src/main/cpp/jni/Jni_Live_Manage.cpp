@@ -9,6 +9,8 @@
 #include "../core/FilterFactory.h"
 
 
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -299,19 +301,19 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_SetWaterMark
 
     if (videoCaptureInit) {
 //
-//        WaterMarkConfig *waterMarkConfig = new WaterMarkConfig();
-//        videoCapture->enableWaterMark = enable;
-//        waterMarkConfig->frameWidth = videoCapture->GetVideoEncodeArgs()->in_height;//480
-//        waterMarkConfig->frameHeight = videoCapture->GetVideoEncodeArgs()->in_width;//640
-//        waterMarkConfig->waterWidth = waterWidth;
-//        waterMarkConfig->waterHeight = waterHeight;
-//        waterMarkConfig->x = positionX;
-//        waterMarkConfig->y = positionY;
-//        BYTE *waterData = (BYTE *) malloc(waterWidth * waterHeight * 4);
-//        memcpy(waterData, waterMark, waterWidth * waterHeight * 4);
-//        waterMarkConfig->waterByteData = waterData;
-//        combineVideoHelper = CombineVideoHelper::Instance();
-//        combineVideoHelper->SetWaterMarkConfig(waterMarkConfig);
+        WaterMarkConfig *waterMarkConfig = new WaterMarkConfig();
+        videoCapture->enableWaterMark = enable;
+        waterMarkConfig->frameWidth = videoCapture->GetVideoEncodeArgs()->in_height;//480
+        waterMarkConfig->frameHeight = videoCapture->GetVideoEncodeArgs()->in_width;//640
+        waterMarkConfig->waterWidth = waterWidth;
+        waterMarkConfig->waterHeight = waterHeight;
+        waterMarkConfig->x = positionX;
+        waterMarkConfig->y = positionY;
+        uint8_t *waterData = (uint8_t *) malloc(waterWidth * waterHeight * 4);
+        memcpy(waterData, waterMark, waterWidth * waterHeight * 4);
+        waterMarkConfig->waterByteData = waterData;
+        combineVideoHelper = CombineVideoHelper::Instance();
+        combineVideoHelper->SetWaterMarkConfig(waterMarkConfig);
 
     }
     env->ReleaseByteArrayElements(waterMark_, waterMark, 0);

@@ -55,7 +55,7 @@ import java.io.InputStream;
 
 public class ImageUtils {
 
-    public static Bitmap BuildLogo(Context ctx, String imgName, String date, String id) {
+    public static Bitmap BuildLogo(Context ctx, String imgName) {
         ImageUtils utils = new ImageUtils();
         Bitmap logo = utils.readAsset(ctx, imgName);
         Bitmap waterMark = Bitmap.createBitmap(logo.getWidth(), logo.getHeight(), Bitmap.Config.ARGB_8888);

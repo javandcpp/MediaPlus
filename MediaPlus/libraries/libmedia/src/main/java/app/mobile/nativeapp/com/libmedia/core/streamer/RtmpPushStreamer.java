@@ -29,6 +29,7 @@ package app.mobile.nativeapp.com.libmedia.core.streamer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.RequiresPermission;
@@ -48,7 +49,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.List;
+import java.util.Set;
 
+import app.mobile.nativeapp.com.applicationmanagement.utils.ImageUtils;
 import app.mobile.nativeapp.com.libmedia.core.config.VideoSizeConfig;
 import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
@@ -93,6 +96,7 @@ public class RtmpPushStreamer extends
     private RandomAccessFile file;
     private boolean nativeInt;
     private boolean speak;
+    private ImageUtils mImageUtils;
 
 
     public RtmpPushStreamer(Activity context, SurfaceView surfaceView, PushStreamCall pushStreamCallBack) {
@@ -175,16 +179,26 @@ public class RtmpPushStreamer extends
         if (!initEncoder()) {
             return false;
         }
+        if(!SetWaterMark()){
+            return false;
+        }
         //必须在initEncoder后调用
         Log.d("initNative", "native init success!");
         nativeInt = true;
         return nativeInt;
     }
 
-    private boolean SetWaterMark(){
-        int ret=0;
+    public boolean SetWaterMark() {
+        int ret = 0;
+        mImageUtils = new ImageUtils();
+        Bitmap mMask = ImageUtils.BuildLogo(mContext, ".png");
+        int[] buffer = new int[(mMask.getWidth()) * (mMask.getHeight())];
+        mMask.getPixels(buffer, 0, mMask.getWidth(), 0, 0, mMask.getWidth(), mMask.getHeight());
+        byte[] byteData = new byte[(mMask.getWidth()) * (mMask.getHeight() * 4)];
+        ImageUtils.IntArrayToByteArray(byteData, buffer);
+        ret = LiveJniMediaManager.SetWaterMark(true, byteData, mMask.getWidth(), mMask.getHeight(), 480 - mMask.getWidth() - 20, 50);
+        return ret >= 0;
 
-        return false;
     }
 
     private byte[] InputStreamToByte(InputStream is) throws IOException {
