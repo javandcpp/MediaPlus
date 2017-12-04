@@ -15,6 +15,14 @@
 #include "../core/RtmpStreamer.h"
 #include "../core/AudioCapture.h"
 //#include "../core/CombineVideoHelper.h"
+bool audioCaptureInit = false;
+bool videoCaptureInit = false;
+bool isClose = true;
+bool isRelease = false;
+bool startStream;
+
+mutex mMutex;
+
 AudioCapture *audioCapture = NULL;
 VideoCapture *videoCapture = NULL;
 
@@ -28,12 +36,6 @@ RtmpStreamer *rtmpStreamer = NULL;
 /**
  * 初始化采集数据接收
  */
-bool audioCaptureInit = false;
-bool videoCaptureInit = false;
-bool isClose = true;
-bool isRelease = false;
-bool startStream;
 
-mutex mMutex;
 
 #endif
