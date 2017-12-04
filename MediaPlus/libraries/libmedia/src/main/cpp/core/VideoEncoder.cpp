@@ -5,6 +5,7 @@
 
 #include "VideoEncoder.h"
 #include "StringUtils.h"
+#include "../jni/Jni_Live_Manage.h"
 #include <stdio.h>
 
 
@@ -91,13 +92,13 @@ void VideoEncoder::YUVProcessMirror() {
 }
 
 int VideoEncoder::EncodeH264(OriginData **originData) {
+//    if (videoEncoder->GetVideoCapture()->enableWaterMark) {
+//        CombineVideoHelper::Instance()->CombineWaterMark(0, (*originData)->data);
+//    }
     av_image_fill_arrays(outputYUVFrame->data,
                          outputYUVFrame->linesize, (*originData)->data,
                          AV_PIX_FMT_YUV420P, videoCodecContext->width,
                          videoCodecContext->height, 1);
-    //文字添加
-
-
     outputYUVFrame->pts = (*originData)->pts;
     int ret = 0;
     ret = avcodec_send_frame(videoCodecContext, outputYUVFrame);

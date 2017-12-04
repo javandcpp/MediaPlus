@@ -14,20 +14,22 @@
 #include "../core/AudioEncoder.h"
 #include "../core/RtmpStreamer.h"
 #include "../core/AudioCapture.h"
-
+//#include "../core/CombineVideoHelper.h"
 AudioCapture *audioCapture = NULL;
 VideoCapture *videoCapture = NULL;
 
 VideoEncoder *videoEncoder = NULL;
 AudioEncoder *audioEncoder = NULL;
 
-RtmpStreamer *rtmpStreamer=NULL;
+RtmpStreamer *rtmpStreamer = NULL;
+
+//CombineVideoHelper *combineVideoHelper = 0;
 
 /**
  * 初始化采集数据接收
  */
-bool audioCaptureInit=false;
-bool videoCaptureInit=false;
+bool audioCaptureInit = false;
+bool videoCaptureInit = false;
 bool isClose = true;
 bool isRelease = false;
 bool startStream;

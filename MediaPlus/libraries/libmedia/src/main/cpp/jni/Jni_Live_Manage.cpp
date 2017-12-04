@@ -279,11 +279,44 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_DrawText(JNI
     int ret = 0;
     if (NULL != videoEncoder) {
         FilterFactory *filterFactory = FilterFactory::Get();
-        DrawTextFilter *pTextFilter = filterFactory->createDrawTextFilter(fontPath,text, &x, &y);
+        DrawTextFilter *pTextFilter = filterFactory->createDrawTextFilter(fontPath, text, &x, &y);
         ret = videoEncoder->SetFilter(pTextFilter);
     }
     env->ReleaseStringUTFChars(text_, text);
     return ret;
+}
+
+
+JNIEXPORT jint JNICALL
+Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_SetWaterMark(JNIEnv *env,
+                                                                                 jobject instance,
+                                                                                 jboolean enable,
+                                                                                 jbyteArray waterMark_,
+                                                                                 jint waterWidth,
+                                                                                 jint waterHeight,
+                                                                                 jint positionX,
+                                                                                 jint positionY) {
+    jbyte *waterMark = env->GetByteArrayElements(waterMark_, NULL);
+
+    if (videoCaptureInit) {
+//
+//        WaterMarkConfig *waterMarkConfig = new WaterMarkConfig();
+//        videoCapture->enableWaterMark = enable;
+//        waterMarkConfig->frameWidth = videoCapture->GetVideoEncodeArgs()->in_height;//480
+//        waterMarkConfig->frameHeight = videoCapture->GetVideoEncodeArgs()->in_width;//640
+//        waterMarkConfig->waterWidth = waterWidth;
+//        waterMarkConfig->waterHeight = waterHeight;
+//        waterMarkConfig->x = positionX;
+//        waterMarkConfig->y = positionY;
+//        BYTE *waterData = (BYTE *) malloc(waterWidth * waterHeight * 4);
+//        memcpy(waterData, waterMark, waterWidth * waterHeight * 4);
+//        waterMarkConfig->waterByteData = waterData;
+//        combineVideoHelper = CombineVideoHelper::Instance();
+//        combineVideoHelper->SetWaterMarkConfig(waterMarkConfig);
+
+    }
+    env->ReleaseByteArrayElements(waterMark_, waterMark, 0);
+    return 0;
 }
 
 

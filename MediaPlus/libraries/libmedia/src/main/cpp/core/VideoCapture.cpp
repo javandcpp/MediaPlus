@@ -63,7 +63,7 @@ int VideoCapture::PushVideoData(OriginData *originData) {
         return 0;
     }
     originData->pts = av_gettime();
-    LOG_D(DEBUG,"video capture pts :%lld",originData->pts);
+    LOG_D(DEBUG, "video capture pts :%lld", originData->pts);
     videoCaputureframeQueue.push(originData);
     return originData->size;
 }

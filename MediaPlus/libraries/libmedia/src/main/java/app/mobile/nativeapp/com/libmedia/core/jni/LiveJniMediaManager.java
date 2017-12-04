@@ -141,4 +141,17 @@ public class LiveJniMediaManager {
      */
     public static native int DrawText(String fontFilePath,String text,int x,int y);
 
+
+    /**
+     * 视频水印
+     * @param enable
+     * @param waterMark
+     * @param waterWidth
+     * @param waterHeight
+     * @param positionX
+     * @param positionY
+     * @return
+     */
+    public static native int SetWaterMark(boolean enable,byte[] waterMark,int waterWidth, int waterHeight,int positionX,int positionY);
+
 }
