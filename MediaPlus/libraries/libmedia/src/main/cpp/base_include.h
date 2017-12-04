@@ -7,12 +7,11 @@
 #define NATIVEAPP_BASE_INCLUDE_H
 
 
-
 #include <jni.h>
+#include <iostream>
 #include <string>
 #include "core/debug.h"
 #include <android/log.h>
-
 #include "core/threadsafe_queue.cpp"
 
 #ifdef __cplusplus

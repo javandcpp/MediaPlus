@@ -47,7 +47,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
-        android:text="rtmp://192.168.1.104:1935/test/live"
         android:hint="请输入rtmp推流地址:" />
 
     <TextView

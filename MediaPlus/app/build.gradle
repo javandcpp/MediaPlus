@@ -28,6 +28,7 @@ android {
         }
         debug {
             debuggable true
+            jniDebuggable true
         }
     }
 //    externalNativeBuild {
@@ -82,6 +83,6 @@ dependencies {
     })
     compile supportDependencies["appCompatV7"]
     testCompile testDependecencies["junit"]
-    releaseCompile project(path:':libraries:libmodule',configuration:'release')
-    debugCompile project(path:':libraries:libmodule',configuration:'debug')
+    releaseCompile project(path: ':libraries:libmodule', configuration: 'release')
+    debugCompile project(path: ':libraries:libmodule', configuration: 'debug')
 }
