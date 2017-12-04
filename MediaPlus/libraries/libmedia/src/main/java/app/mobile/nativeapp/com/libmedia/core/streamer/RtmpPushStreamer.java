@@ -191,12 +191,12 @@ public class RtmpPushStreamer extends
     public boolean SetWaterMark() {
         int ret = 0;
         mImageUtils = new ImageUtils();
-        Bitmap mMask = ImageUtils.BuildLogo(mContext, ".png");
+        Bitmap mMask = ImageUtils.BuildLogo(mContext, "logo_water_mark.png");
         int[] buffer = new int[(mMask.getWidth()) * (mMask.getHeight())];
         mMask.getPixels(buffer, 0, mMask.getWidth(), 0, 0, mMask.getWidth(), mMask.getHeight());
         byte[] byteData = new byte[(mMask.getWidth()) * (mMask.getHeight() * 4)];
         ImageUtils.IntArrayToByteArray(byteData, buffer);
-        ret = LiveJniMediaManager.SetWaterMark(true, byteData, mMask.getWidth(), mMask.getHeight(), 480 - mMask.getWidth() - 20, 50);
+        ret = LiveJniMediaManager.SetWaterMark(true, byteData, mMask.getWidth(), mMask.getHeight(), 480 - mMask.getWidth() - 10, 30);
         return ret >= 0;
 
     }
