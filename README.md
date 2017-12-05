@@ -39,15 +39,15 @@
 
 
 * Android相机采集NV21格式数据，并使用libyuv转换I420（yuv420p）、处理I420旋转、前置摄像头镜像; 音频采集PCM数据：2通道、16位、采样率48000KHz,音视频软编。
-* V1.0版本只支持RTMP协议，后续扩展会扩展其他协议。
-* 仅适用于Android移动音频和视频的采集和推流。
-* V1.0没有添加任何视频滤镜等其他特效，后续版本会新增视频滤镜等功能。
-* 需要搭建RTMP服务(如:nginx+rtmp,crtmpserver等);也可以写入本地文件，只需更改推流地址，如：“/mnt/sdcard/test.flv”。
-* 以下为相关API调用：
+* 当前版本支持RTMP协议推流。
+* 支持添加水印功能。
+* 适用于Android移动音频和视频的采集和推流。
+* 暂无任何视频滤镜等其他特效。
+* 搭建RTMP测试服务(如:nginx+rtmp、crtmpserver、Red5等);也可以写入本地文件，只需更改推流地址，如：“/mnt/sdcard/test.flv”。
+
 
 #### JNI API说明：
 ```
-
 
 * 初始化音视频采集
 LiveJniMediaManager.InitAudioCapture(int channles, int SampleRate, int SampleBitRate);
@@ -71,7 +71,7 @@ LiveJniMediaManager.Release();
    
 ```
 
-#### Use example:
+#### RtmpPushStreamer使用示例:
 ```
  mRtmpPushStreamer = new RtmpPushStreamer.Builder()
                      .withActivity(LiveActivity.this)
