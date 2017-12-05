@@ -27,6 +27,16 @@
 
 </div>
 
+* 水印截图
+<div align=center>
+<table border=0 cellspacing="10" style="border-collapse:separate; border-spacing:0px 50px;">
+<td>
+<img width="220" height="380" src="https://github.com/javandoc/MediaPlus/blob/master/Resource/watermark.gif"/>
+</td>
+</table>
+</div>
+
+
 
 * Android相机采集NV21格式数据，并使用libyuv转换I420（yuv420p）、处理I420旋转、前置摄像头镜像; 音频采集PCM数据：2通道、16位、采样率48000KHz,音视频软编。
 * V1.0版本只支持RTMP协议，后续扩展会扩展其他协议。
@@ -35,8 +45,9 @@
 * 需要搭建RTMP服务(如:nginx+rtmp,crtmpserver等);也可以写入本地文件，只需更改推流地址，如：“/mnt/sdcard/test.flv”。
 * 以下为相关API调用：
 
-#### Use example:
+#### JNI API说明：
 ```
+
 
 * 初始化音视频采集
 LiveJniMediaManager.InitAudioCapture(int channles, int SampleRate, int SampleBitRate);
@@ -56,10 +67,28 @@ LiveJniMediaManager.EncodeAAC(audioBuffer, length);
 * 停止推流与资源回收
 LiveJniMediaManager.Close();
 LiveJniMediaManager.Release();
-    
+
    
 ```
 
+#### Use example:
+```
+ mRtmpPushStreamer = new RtmpPushStreamer.Builder()
+                     .withActivity(LiveActivity.this)
+                     .withSurfaceView(surfaceView)
+                     .withWaterMark(true, ivWaterMark, 90, 30)  //参数:true 水印开关 水印图片 宽(90px)\高(30px)
+                     .withPushStreamCall(new PushStreamCall() {
+                            @Override
+                            public void PushSucess() {                     
+                               #-------"推流成功"--------#
+                            }
+
+                            @Override
+                            public void PushFailed() {
+                               #-------"推流失败"--------#
+                            }
+                        }).build();
+```
 
 #### -- [download APK](https://github-production-release-asset-2e65be.s3.amazonaws.com/107510291/ac471784-cdeb-11e7-9551-a8294928925d?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20171120%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20171120T043140Z&X-Amz-Expires=300&X-Amz-Signature=8e6a595afae260f794f7d44fcbf6bfc4a5c254b90a5fde24cdf46290c5ca242d&X-Amz-SignedHeaders=host&actor_id=9412054&response-content-disposition=attachment%3B%20filename%3Dapp-debug1.0.apk&response-content-type=application%2Fvnd.android.package-archive) --
 
