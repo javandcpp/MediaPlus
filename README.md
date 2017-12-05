@@ -39,15 +39,15 @@
 
 
 * Android相机采集NV21格式数据，并使用libyuv转换I420（yuv420p）、处理I420旋转、前置摄像头镜像; 音频采集PCM数据：2通道、16位、采样率48000KHz,音视频软编。
-* V1.0版本只支持RTMP协议，后续扩展会扩展其他协议。
-* 仅适用于Android移动音频和视频的采集和推流。
-* V1.0没有添加任何视频滤镜等其他特效，后续版本会新增视频滤镜等功能。
-* 需要搭建RTMP服务(如:nginx+rtmp,crtmpserver等);也可以写入本地文件，只需更改推流地址，如：“/mnt/sdcard/test.flv”。
-* 以下为相关API调用：
+* 当前版本支持RTMP协议推流。
+* 支持视频添加水印功能。
+* 适用于Android移动音频和视频的采集和推流。
+* 暂无任何视频滤镜等其他特效。
+* 搭建RTMP测试服务(如:nginx+rtmp、crtmpserver、Red5等);也可以写入本地文件，只需更改推流地址，如：“/mnt/sdcard/test.flv”。
 
-#### JNI API说明：
+
+#### JNI 核心 API说明：
 ```
-
 
 * 初始化音视频采集
 LiveJniMediaManager.InitAudioCapture(int channles, int SampleRate, int SampleBitRate);
@@ -56,6 +56,9 @@ LiveJniMediaManager.InitVideoCapture(int inWidth, int inHeight, int outWidth, in
 * 初始化音视频编码器
 LiveJniMediaManager.InitAudioEncoder();
 LiveJniMediaManager.InitVideoEncoder();
+
+* 水印添加
+LiveJniMediaManager.SetWaterMark(boolean enable,byte[] waterMark,int waterWidth,int waterHeight,int positionX,int positionY);
     
 * 开始推流
 LiveJniMediaManager.StartPush(pushUrl);
@@ -71,7 +74,7 @@ LiveJniMediaManager.Release();
    
 ```
 
-#### Use example:
+#### RtmpPushStreamer使用示例:
 ```
  mRtmpPushStreamer = new RtmpPushStreamer.Builder()
                      .withActivity(LiveActivity.this)
@@ -90,6 +93,6 @@ LiveJniMediaManager.Release();
                         }).build();
 ```
 
-#### -- [download APK](https://github-production-release-asset-2e65be.s3.amazonaws.com/107510291/ac471784-cdeb-11e7-9551-a8294928925d?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20171120%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20171120T043140Z&X-Amz-Expires=300&X-Amz-Signature=8e6a595afae260f794f7d44fcbf6bfc4a5c254b90a5fde24cdf46290c5ca242d&X-Amz-SignedHeaders=host&actor_id=9412054&response-content-disposition=attachment%3B%20filename%3Dapp-debug1.0.apk&response-content-type=application%2Fvnd.android.package-archive) --
+#### -- [download APK](https://github-production-release-asset-2e65be.s3.amazonaws.com/107510291/bcd624bc-d9dc-11e7-9e0c-e07b0b4de0d4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20171205%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20171205T085701Z&X-Amz-Expires=300&X-Amz-Signature=4cf701cb8efb7e4f46d093a34b2962d6e572dba48e7a208d74879fb059f41d58&X-Amz-SignedHeaders=host&actor_id=9412054&response-content-disposition=attachment%3B%20filename%3Dapp-debug.apk&response-content-type=application%2Fvnd.android.package-archive) --
 
 #### -- [API文档](https://javandoc.github.io/javadoc/) --
