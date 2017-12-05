@@ -41,27 +41,21 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Android on 2017/7/17.
- * <p>
- * mImageUtils = new ImageUtils();
- * mMask = ImageUtils.BuildQiQiLogo(this);
- * int[] buffer = new int[mMask.getWidth() * mMask.getHeight()];
- * mMask.getPixels(buffer,0,mMask.getWidth(),0,0,mMask.getWidth(),mMask.getHeight());
- * byte[] byteB = new byte[mMask.getWidth() * mMask.getHeight()*4];
- * ImageUtils.IntArrayToByteArray(byteB,buffer);
- * player.SetWaterMark(true,byteB,mMask.getWidth(),mMask.getHeight(),10,20);
- */
 
 public class ImageUtils {
 
-    public static Bitmap BuildLogo(Context ctx, String imgName) {
+    public static Bitmap BuildWaterMark(Context ctx, String imgFileName) {
         ImageUtils utils = new ImageUtils();
-        Bitmap logo = utils.readAsset(ctx, imgName);
+        Bitmap logo = utils.readAsset(ctx, imgFileName);
         Bitmap waterMark = Bitmap.createBitmap(logo.getWidth(), logo.getHeight(), Bitmap.Config.ARGB_8888);
         utils.addLogo(waterMark, logo, 0, 0);
-//        utils.addText(ctx, waterMark, date, 14, Color.BLACK, Typeface.create("宋体", Typeface.BOLD), 255, 50, 8);
-//        utils.addText(ctx, waterMark, id, 14, Color.BLACK, Typeface.create("宋体", Typeface.BOLD), 255, 50, 26);
+        return waterMark;
+    }
+
+    public static Bitmap BuildWaterMark(Context ctx, Bitmap bitmap) {
+        ImageUtils utils = new ImageUtils();
+        Bitmap waterMark = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        utils.addLogo(waterMark, bitmap, 0, 0);
         return waterMark;
     }
 
@@ -72,7 +66,7 @@ public class ImageUtils {
             InputStream is = am.open(fileName);
             BitmapFactory.Options opts = new BitmapFactory.Options();
             opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            image= BitmapFactory.decodeStream(is, null, opts);
+            image = BitmapFactory.decodeStream(is, null, opts);
 
             is.close();
         } catch (IOException e) {
@@ -109,12 +103,7 @@ public class ImageUtils {
 
     }
 
-    //读取资源文件
-    public Bitmap readResource(Context ctx, int id) {
-        return BitmapFactory.decodeResource(ctx.getResources(), id);
-    }
 
-    //创造动态水印
     public boolean addText(Context ctx, Bitmap Dst, String text, int textSize, int textColor, Typeface font, int alpha, int positionX, int positionY) {
 
         Canvas canvas = new Canvas(Dst);
@@ -129,7 +118,6 @@ public class ImageUtils {
         return true;
     }
 
-    //创造动态水印
     public boolean addLogo(Bitmap Dst, Bitmap logo, int positionX, int positionY) {
         Canvas canvas = new Canvas(Dst);
         canvas.drawBitmap(logo, positionX, positionY, null);
@@ -137,61 +125,25 @@ public class ImageUtils {
     }
 
 
-    /**
-     * 根据屏幕系数比例获取文字大小
-     *
-     * @return
-     */
-    private static float scalaFonts(Context ctx, int size) {
-        Resources resources = ctx.getResources();
-        float scale = resources.getDisplayMetrics().density;
-        //暂未实现
-        return size * scale;
-    }
-
-    /**
-     * @return 返回指定笔和指定字符串的长度
-     */
-    public static float getFontLength(Paint paint, String str) {
-        return paint.measureText(str);
-    }
-
-    /**
-     * @return 返回指定笔的文字高度
-     */
     public static float getFontHeight(Paint paint) {
         Paint.FontMetrics fm = paint.getFontMetrics();
         return fm.descent - fm.ascent;
     }
 
-    /**
-     * @return 返回指定笔离文字顶部的基准距离
-     */
     public static float getFontLeading(Paint paint) {
         Paint.FontMetrics fm = paint.getFontMetrics();
         return fm.leading - fm.ascent;
     }
 
-    public int getUnsignedByte(byte data) {      //将data字节型数据转换为0~255 (0xFF 即BYTE)。
-        return data & 0x0FF;
-    }
-
-    public int getUnsignedByte(short data) {      //将data字节型数据转换为0~65535 (0xFFFF 即 WORD)。
-        return data & 0x0FFFF;
-    }
-
     public static void IntArrayToByteArray(byte[] des, int[] src) {
         for (int i = 0; i < src.length; i++) {
-            des[4 * i + 0] = ((byte) ((src[i] & 0xFF000000) >> 24));//0
-            des[4 * i + 1] = ((byte) ((src[i] & 0x00FF0000) >> 16));//6
-            des[4 * i + 2] = ((byte) ((src[i] & 0x0000FF00) >> 8));//10
-            des[4 * i + 3] = ((byte) (src[i] & 0x000000FF));//15
+            des[4 * i + 0] = ((byte) ((src[i] & 0xFF000000) >> 24));//A
+            des[4 * i + 1] = ((byte) ((src[i] & 0x00FF0000) >> 16));//R
+            des[4 * i + 2] = ((byte) ((src[i] & 0x0000FF00) >> 8));//G
+            des[4 * i + 3] = ((byte) (src[i] & 0x000000FF));//B
         }
     }
 
-    /**
-     * 把Bitmap转为 PNG 格式的 Byte数组
-     */
     public static byte[] Bitmap2Bytes(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.PNG, 100, baos);

@@ -147,7 +147,7 @@ public class LiveJniMediaManager {
      * water mark
      *
      * @param enable
-     * @param waterMark_
+     * @param waterMark
      * @param waterWidth
      * @param waterHeight
      * @param positionX
@@ -155,7 +155,7 @@ public class LiveJniMediaManager {
      * @return
      */
     public static native int SetWaterMark(boolean enable,
-                                          byte[] waterMark_,
+                                          byte[] waterMark,
                                           int waterWidth,
                                           int waterHeight,
                                           int positionX,

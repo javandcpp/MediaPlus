@@ -28,19 +28,22 @@
 package app.mobile.nativeapp.com.mediaplus.activity;
 
 import android.Manifest;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -48,11 +51,10 @@ import android.widget.Toast;
 
 import app.mobile.nativeapp.com.applicationmanagement.inter.PermissionCheckResult;
 import app.mobile.nativeapp.com.applicationmanagement.permission.PermissionManager;
-import app.mobile.nativeapp.com.applicationmanagement.utils.AppUtils;
-import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
 import app.mobile.nativeapp.com.libmedia.core.streamer.PushStreamCall;
 import app.mobile.nativeapp.com.libmedia.core.streamer.RtmpPushStreamer;
 import app.mobile.nativeapp.com.mediaplus.R;
+
 
 public class LiveActivity extends AppCompatActivity implements View.OnClickListener {
     private final int SUCCESS = 100 << 1;
@@ -64,6 +66,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnStart;
     private Handler mHandler;
     private EditText etPushUrl;
+    private ImageView ivWaterMark;
 
 
     @Override
@@ -72,25 +75,21 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 防止锁屏
         setContentView(R.layout.activity_recorder);
         final Switch swflash = (Switch) findViewById(R.id.swFlash);
-        final TextView dotView = (TextView) findViewById(R.id.dotView);
+        final ImageView ivCamera = (ImageView) findViewById(R.id.ivCamera);
         final TextView tvTx = (TextView) findViewById(R.id.tvTxBytes);
         final TextView tvRx = (TextView) findViewById(R.id.tvRxBytes);
+        ivWaterMark = ((ImageView) findViewById(R.id.ivWaterMark));
         etPushUrl = (EditText) findViewById(R.id.etStreamAddress);
         mHandler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message message) {
                 switch (message.what) {
                     case SUCCESS:
-                        if (dotView.getVisibility() == View.VISIBLE) {
-                            dotView.setVisibility(View.GONE);
+                        if (ivCamera.getVisibility() == View.VISIBLE) {
+                            ivCamera.setVisibility(View.GONE);
                         } else {
-                            dotView.setVisibility(View.VISIBLE);
+                            ivCamera.setVisibility(View.VISIBLE);
                         }
-
-//                        long rxBytes = AppUtils.getRxBytes();
-//                        long txBytes = AppUtils.getTxBytes();
-//                        tvTx.setText("Tx [" + txBytes / 1000 + "KB/s]");
-//                        tvRx.setText("Rx [" + rxBytes / 1000 + "KB/s]");
                         mHandler.sendEmptyMessageDelayed(SUCCESS, 1000);
                         break;
                 }
@@ -124,20 +123,24 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void granted() {
                 SurfaceView surfaceView = new SurfaceView(LiveActivity.this);
-                mRtmpPushStreamer = new RtmpPushStreamer(LiveActivity.this, surfaceView, new PushStreamCall() {
-                    @Override
-                    public void PushSucess() {
-                        btnStart.setText("停止直播");
-                        Toast.makeText(getApplicationContext(), "推流成功", Toast.LENGTH_LONG).show();
-                        mHandler.sendEmptyMessage(SUCCESS);
-                    }
+                mRtmpPushStreamer = new RtmpPushStreamer.Builder()
+                        .withActivity(LiveActivity.this)//上下文
+                        .withSurfaceView(surfaceView)//SurfaceView
+                        .withWaterMark(true, ivWaterMark, 90, 30)  //参数:水印Imageview,水印图片宽(px),水印图片高(px)
+                        .withPushStreamCall(new PushStreamCall() {
+                            @Override
+                            public void PushSucess() {
+                                btnStart.setText("停止直播");
+                                Toast.makeText(getApplicationContext(), "推流成功", Toast.LENGTH_LONG).show();
+                                mHandler.sendEmptyMessage(SUCCESS);
+                            }
 
-                    @Override
-                    public void PushFailed() {
-                        btnStart.setText("开始直播");
-                        Toast.makeText(getApplicationContext(), "推流失败", Toast.LENGTH_LONG).show();
-                    }
-                });
+                            @Override
+                            public void PushFailed() {
+                                btnStart.setText("开始直播");
+                                Toast.makeText(getApplicationContext(), "推流失败", Toast.LENGTH_LONG).show();
+                            }
+                        }).build();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -188,6 +191,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
             mRtmpPushStreamer.destroy();
         }
     }
+
 
     @Override
     public void onClick(View view) {

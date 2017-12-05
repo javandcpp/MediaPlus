@@ -29,13 +29,23 @@ package app.mobile.nativeapp.com.libmedia.core.streamer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
+import android.media.Image;
+import android.net.rtp.RtpStream;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.RequiresPermission;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.guagua.avcapture.AudioCaptureInterface;
 import com.guagua.avcapture.VideoCaptureInterface;
@@ -57,6 +67,7 @@ import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
 import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
 
+import static android.R.attr.bitmap;
 import static android.R.id.list;
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
 
@@ -70,6 +81,8 @@ public class RtmpPushStreamer extends
     public final SurfaceHolder mSurfaceHolder;
     private final PushStreamCall mPushStreamCallBack;
     private final Activity mContext;
+    private final ImageView mView;
+    private final boolean enableWaterMark;
     private String mPushurl;
     public int[] m_aiBufferLength;
     public AudioCaptureInterface mAudioCapture = new AudioCapture();
@@ -97,17 +110,19 @@ public class RtmpPushStreamer extends
     private boolean nativeInt;
     private boolean speak;
     private ImageUtils mImageUtils;
+    private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener;
 
 
-    public RtmpPushStreamer(Activity context, SurfaceView surfaceView, PushStreamCall pushStreamCallBack) {
+    private RtmpPushStreamer(Activity context, SurfaceView surfaceView, boolean waterMarkEnable, ImageView waterMarkView, int waterWPixels, int waterHPixels, PushStreamCall pushStreamCallBack) {
         mContext = context;
+        mView = waterMarkView;
+        enableWaterMark = waterMarkEnable;
         mSurfaceHolder = surfaceView.getHolder();
         mPushStreamCallBack = pushStreamCallBack;
         File externalStorageDirectory = Environment.getExternalStorageDirectory();
         surfaceView.getHolder().addCallback(this);
         NativeCrashHandler nativeCrashHandler = new NativeCrashHandler();
         nativeCrashHandler.registerForNativeCrash(context.getApplicationContext());
-
         videoFile = new File(externalStorageDirectory, "video.yuv");
         audioFile = new File(externalStorageDirectory, "audio.pcm");
         try {
@@ -179,26 +194,56 @@ public class RtmpPushStreamer extends
         if (!initEncoder()) {
             return false;
         }
-        if(!SetWaterMark()){
-            return false;
+        if (enableWaterMark) {
+            SetWaterMark(mView);
         }
+
         //必须在initEncoder后调用
         Log.d("initNative", "native init success!");
         nativeInt = true;
         return nativeInt;
     }
 
-    public boolean SetWaterMark() {
-        int ret = 0;
-        mImageUtils = new ImageUtils();
-        Bitmap mMask = ImageUtils.BuildLogo(mContext, "logo_water_mark.png");
+    public void SetWaterMark(final View view) {
+        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        int resourceId = mContext.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        final int statusBar = mContext.getResources().getDimensionPixelSize(resourceId);
+        ;
+        final float widthPercent = (float) 480 / (float) displayMetrics.widthPixels;
+        final float heightPercent = (float) 640 / (float) displayMetrics.heightPixels;
+        final Bitmap bitmap = convertViewToBitmap(view);
+        final Bitmap mMask = ImageUtils.BuildWaterMark(mContext, bitmap);
         int[] buffer = new int[(mMask.getWidth()) * (mMask.getHeight())];
         mMask.getPixels(buffer, 0, mMask.getWidth(), 0, 0, mMask.getWidth(), mMask.getHeight());
-        byte[] byteData = new byte[(mMask.getWidth()) * (mMask.getHeight() * 4)];
+        final byte[] byteData = new byte[(mMask.getWidth()) * (mMask.getHeight() * 4)];
         ImageUtils.IntArrayToByteArray(byteData, buffer);
-        ret = LiveJniMediaManager.SetWaterMark(true, byteData, mMask.getWidth(), mMask.getHeight(), 480 - mMask.getWidth() - 10, 30);
-        return ret >= 0;
+        onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    view.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
+                } else {
+                    view.getViewTreeObserver().removeGlobalOnLayoutListener(onGlobalLayoutListener);
+                }
+                int[] location = new int[2];
+                view.getLocationInWindow(location);
+                int x = (int) (location[0] * widthPercent);
+                int y = (int) (location[1] * heightPercent) - statusBar;
+                Log.d("position:", x + "," + y);
+                LiveJniMediaManager.SetWaterMark(true, byteData, mMask.getWidth(), mMask.getHeight(), x, y);
+            }
+        };
+        view.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
+    }
 
+    public Bitmap convertViewToBitmap(View view) {
+        view.setDrawingCacheEnabled(true);
+        view.measure(View.MeasureSpec.makeMeasureSpec(90, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(30, View.MeasureSpec.EXACTLY));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.buildDrawingCache();
+        return view.getDrawingCache();
     }
 
     private byte[] InputStreamToByte(InputStream is) throws IOException {
@@ -220,7 +265,7 @@ public class RtmpPushStreamer extends
     private boolean DrawText() {
         int ret = 0;
         try {
-            File file = new File(Environment.getExternalStorageDirectory(),"font1.ttf");
+            File file = new File(Environment.getExternalStorageDirectory(), "font1.ttf");
 
             if (file.exists()) {
                 ret = LiveJniMediaManager.DrawText(file.getAbsolutePath().toString(), "swordman", 100, 100);
@@ -673,6 +718,46 @@ public class RtmpPushStreamer extends
             LiveJniMediaManager.SetCameraID(LiveJniMediaManager.CameraID.FRONT.ordinal());
         }
         switchCamera(curCameraType, currentMicIndex);
+    }
+
+    /**
+     * inner class Builder
+     */
+    public static class Builder {
+        private Activity context;
+        private SurfaceView surfaceView;
+        private ImageView waterMarkView;
+        private int waterMarkWPixels;
+        private int waterMarkHPixels;
+        private PushStreamCall pushStreamCallBack;
+        private boolean enable;
+
+        public Builder withActivity(Activity context) {
+            this.context = context;
+            return this;
+        }
+
+        public Builder withSurfaceView(SurfaceView surfaceView) {
+            this.surfaceView = surfaceView;
+            return this;
+        }
+
+        public Builder withWaterMark(boolean enable, ImageView waterMarkView, int waterMarkWPixels, int waterMarkHPixels) {
+            this.waterMarkView = waterMarkView;
+            this.waterMarkWPixels = waterMarkWPixels;
+            this.waterMarkHPixels = waterMarkHPixels;
+            this.enable = enable;
+            return this;
+        }
+
+        public Builder withPushStreamCall(PushStreamCall pushStreamCallBack) {
+            this.pushStreamCallBack = pushStreamCallBack;
+            return this;
+        }
+
+        public RtmpPushStreamer build() {
+            return new RtmpPushStreamer(context, surfaceView, enable, waterMarkView, waterMarkWPixels, waterMarkHPixels, pushStreamCallBack);
+        }
     }
 
 

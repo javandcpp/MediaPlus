@@ -292,15 +292,13 @@ JNIEXPORT jint JNICALL
 Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_SetWaterMark(JNIEnv *env,
                                                                                  jobject instance,
                                                                                  jboolean enable,
-                                                                                 jbyteArray waterMark_,
+                                                                                 jbyteArray waterMark,
                                                                                  jint waterWidth,
                                                                                  jint waterHeight,
                                                                                  jint positionX,
                                                                                  jint positionY) {
-    jbyte *waterMark = env->GetByteArrayElements(waterMark_, NULL);
-
+    jbyte *waterMark_ = env->GetByteArrayElements(waterMark, NULL);
     if (videoCaptureInit) {
-//
         WaterMarkConfig *waterMarkConfig = new WaterMarkConfig();
         videoCapture->enableWaterMark = enable;
         waterMarkConfig->frameWidth = videoCapture->GetVideoEncodeArgs()->in_height;//480
@@ -310,13 +308,13 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_SetWaterMark
         waterMarkConfig->x = positionX;
         waterMarkConfig->y = positionY;
         uint8_t *waterData = (uint8_t *) malloc(waterWidth * waterHeight * 4);
-        memcpy(waterData, waterMark, waterWidth * waterHeight * 4);
+        memcpy(waterData, waterMark_, waterWidth * waterHeight * 4);
         waterMarkConfig->waterByteData = waterData;
         combineVideoHelper = CombineVideoHelper::Instance();
         combineVideoHelper->SetWaterMarkConfig(waterMarkConfig);
 
     }
-    env->ReleaseByteArrayElements(waterMark_, waterMark, 0);
+    env->ReleaseByteArrayElements(waterMark, waterMark_, 0);
     return 0;
 }
 

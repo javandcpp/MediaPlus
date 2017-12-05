@@ -50,12 +50,12 @@ int CombineVideoHelper::CombineWaterMark(uint8_t *dst, uint8_t *&src) {
     for (int w = 0; w < markWidth; w++) {
         for (int h = 0; h < markHeight; h++) {
 
-            uint8_t alpha = data[(h * markWidth + w) * 4 + 1];
+            uint8_t alpha = data[(h * markWidth + w) * 4];
             if (alpha != 0) {
 
                 uint8_t R = data[(h * markWidth + w) * 4 + 1];
-                uint8_t G = data[(h * markWidth + w) * 4 + 1];
-                uint8_t B = data[(h * markWidth + w) * 4 + 1];
+                uint8_t G = data[(h * markWidth + w) * 4 + 2];
+                uint8_t B = data[(h * markWidth + w) * 4 + 3];
                 float alphaPercent = (float) alpha / 255;
 
                 uint8_t Y = (uint8_t) ((66 * R + 129 * G + 25 * B + 128) >> 8) + 16;
