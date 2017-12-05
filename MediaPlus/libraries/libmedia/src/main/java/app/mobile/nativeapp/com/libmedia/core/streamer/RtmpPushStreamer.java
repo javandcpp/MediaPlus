@@ -204,7 +204,7 @@ public class RtmpPushStreamer extends
         return nativeInt;
     }
 
-    public void SetWaterMark(final View view) {
+    private void SetWaterMark(final View view) {
         WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
