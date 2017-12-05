@@ -46,7 +46,7 @@
 * 搭建RTMP测试服务(如:nginx+rtmp、crtmpserver、Red5等);也可以写入本地文件，只需更改推流地址，如：“/mnt/sdcard/test.flv”。
 
 
-#### JNI API说明：
+#### JNI 核心 API说明：
 ```
 
 * 初始化音视频采集
@@ -56,6 +56,9 @@ LiveJniMediaManager.InitVideoCapture(int inWidth, int inHeight, int outWidth, in
 * 初始化音视频编码器
 LiveJniMediaManager.InitAudioEncoder();
 LiveJniMediaManager.InitVideoEncoder();
+
+* 水印添加
+LiveJniMediaManager.SetWaterMark(boolean enable,byte[] waterMark,int waterWidth,int waterHeight,int positionX,int positionY);
     
 * 开始推流
 LiveJniMediaManager.StartPush(pushUrl);
