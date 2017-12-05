@@ -238,7 +238,7 @@ public class RtmpPushStreamer extends
         view.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
     }
 
-    public Bitmap convertViewToBitmap(View view) {
+    private Bitmap convertViewToBitmap(View view) {
         view.setDrawingCacheEnabled(true);
         view.measure(View.MeasureSpec.makeMeasureSpec(90, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(30, View.MeasureSpec.EXACTLY));
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
