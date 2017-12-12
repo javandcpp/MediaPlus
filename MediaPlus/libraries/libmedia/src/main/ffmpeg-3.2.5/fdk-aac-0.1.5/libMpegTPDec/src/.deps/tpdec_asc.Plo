@@ -1,0 +1,31 @@
+libMpegTPDec/src/tpdec_asc.lo: libMpegTPDec/src/tpdec_asc.cpp \
+ libMpegTPDec/include/tpdec_lib.h libMpegTPDec/include/tp_data.h \
+ libSYS/include/machine_type.h libSYS/include/FDK_audio.h \
+ libSYS/include/machine_type.h libSYS/include/genericStds.h \
+ libFDK/include/FDK_bitstream.h libFDK/include/FDK_bitbuffer.h \
+ libSYS/include/genericStds.h libMpegTPDec/include/tp_data.h \
+ libFDK/include/FDK_crc.h libFDK/include/FDK_bitstream.h
+
+libMpegTPDec/include/tpdec_lib.h:
+
+libMpegTPDec/include/tp_data.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/FDK_audio.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/genericStds.h:
+
+libFDK/include/FDK_bitstream.h:
+
+libFDK/include/FDK_bitbuffer.h:
+
+libSYS/include/genericStds.h:
+
+libMpegTPDec/include/tp_data.h:
+
+libFDK/include/FDK_crc.h:
+
+libFDK/include/FDK_bitstream.h:

@@ -12,11 +12,16 @@ cmake_minimum_required(VERSION 3.4.1)
 
 #包含头文件
 
+
+
 set(include-opencvheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/opencv)
 include_directories(${include-opencvheaders})
 
 set(include-yuvheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/yuv)
 include_directories(${include-yuvheaders})
+
+set(include-ffmpegsrcheaders ${CMAKE_SOURCE_DIR}/src/main/ffmpeg-3.2.5)
+include_directories(${include-ffmpegsrcheaders})
 
 set(include-ffmpegheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/ffmpeg)
 include_directories(${include-ffmpegheaders})
@@ -42,6 +47,7 @@ set_target_properties(ffmpeg
 
 file(GLOB native_core_srcs "src/main/cpp/core/*.cpp")
 file(GLOB native_jni_srcs "src/main/cpp/jni/*.cpp")
+file(GLOB native_jni_c_srcs "src/main/cpp/jni/*.c")
 file(GLOB native_event_srcs "src/main/cpp/event/*.cpp")
 
 add_library( # Sets the name of the library.
@@ -52,9 +58,11 @@ add_library( # Sets the name of the library.
              # Provides a relative path to your source file(s).
              # Associated headers in the same location as their source
              # file are automatically included.
+
              ${native_jni_srcs}
              ${native_core_srcs}
              ${native_event_srcs}
+             ${native_jni_c_srcs}
              )
 
 # Searches for a specified prebuilt library and stores the path as a

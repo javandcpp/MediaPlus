@@ -63,19 +63,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile supportDependencies["appCompatV7"]
-    testCompile testDependecencies["junit"]
-    compile 'com.google.dagger:dagger-android:2.12'
-    compile 'com.google.dagger:dagger-android-support:2.12'
-    // if you use the support libraries
+    implementation supportDependencies["appCompatV7"]
+    testImplementation testDependecencies["junit"]
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.12'
-    releaseCompile project(path:':libraries:libmedia',configuration:'release')
-    debugCompile project(path:':libraries:libmedia',configuration:'debug')
-    compile project(':libraries:libnet')
-    compile project(':libraries:libmvp')
-    compile project(':libraries:libdatabase')
+    api project(':libraries:libmedia')
+    api project(':libraries:libnet')
+    api project(':libraries:libmvp')
+    api project(':libraries:libdatabase')
+    api project(':libraries:applicationmanagement')
 }

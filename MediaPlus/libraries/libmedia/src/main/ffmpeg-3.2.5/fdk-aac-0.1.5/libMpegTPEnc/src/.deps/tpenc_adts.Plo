@@ -1,0 +1,36 @@
+libMpegTPEnc/src/tpenc_adts.lo: libMpegTPEnc/src/tpenc_adts.cpp \
+ libMpegTPEnc/src/tpenc_adts.h libMpegTPDec/include/tp_data.h \
+ libSYS/include/machine_type.h libSYS/include/FDK_audio.h \
+ libSYS/include/machine_type.h libSYS/include/genericStds.h \
+ libFDK/include/FDK_bitstream.h libFDK/include/FDK_bitbuffer.h \
+ libSYS/include/genericStds.h libFDK/include/FDK_crc.h \
+ libFDK/include/FDK_bitstream.h libMpegTPEnc/include/tpenc_lib.h \
+ libMpegTPEnc/include/tp_data.h libMpegTPEnc/src/tpenc_asc.h
+
+libMpegTPEnc/src/tpenc_adts.h:
+
+libMpegTPDec/include/tp_data.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/FDK_audio.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/genericStds.h:
+
+libFDK/include/FDK_bitstream.h:
+
+libFDK/include/FDK_bitbuffer.h:
+
+libSYS/include/genericStds.h:
+
+libFDK/include/FDK_crc.h:
+
+libFDK/include/FDK_bitstream.h:
+
+libMpegTPEnc/include/tpenc_lib.h:
+
+libMpegTPEnc/include/tp_data.h:
+
+libMpegTPEnc/src/tpenc_asc.h:

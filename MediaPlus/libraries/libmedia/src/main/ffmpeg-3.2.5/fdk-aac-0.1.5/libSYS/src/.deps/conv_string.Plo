@@ -1,0 +1,11 @@
+libSYS/src/conv_string.lo: libSYS/src/conv_string.cpp \
+ libSYS/include/genericStds.h libSYS/include/machine_type.h \
+ libSYS/include/conv_string.h libSYS/include/genericStds.h
+
+libSYS/include/genericStds.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/conv_string.h:
+
+libSYS/include/genericStds.h:

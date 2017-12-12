@@ -17,6 +17,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++11 -frtti -fno-exceptions"
+                arguments "-DANDROID_ARM_NEON=TRUE","-DANDROID_TOOLCHAIN=clang","-DANDROID_STL=gnustl_static"
 //                -frtti 开启RTTI的支持（dynamic_cast和typeid需要用到），和vs c++不同，这在gcc中是默认选项。使用"-fno-rtti"将其禁用。
 //                -fno-rtti 禁用运行时类型信息
 //                -fno-exceptions 禁用异常机制
@@ -68,12 +69,12 @@ android {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile supportDependencies["appCompatV7"]
-    testCompile testDependecencies["junit"]
-    compile project(':libraries:applicationmanagement')
-    compile files('libs/avcapture.jar')
+    implementation supportDependencies["appCompatV7"]
+    testImplementation testDependecencies["junit"]
+    implementation project(':libraries:applicationmanagement')
+    implementation files('libs/avcapture.jar')
 }

@@ -1,0 +1,87 @@
+libSYS/src/cmdl_parser.lo: libSYS/src/cmdl_parser.cpp \
+ /Applications/android-ndk-r13/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9.x/include/stdarg.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/stdio.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/cdefs.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/cdefs_elf.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/android/api-level.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/types.h \
+ /Applications/android-ndk-r13/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9.x/include/stddef.h \
+ /Applications/android-ndk-r13/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9.x/include/stdint.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/stdint.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/_types.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/machine/_types.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/linux/posix_types.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/linux/stddef.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/linux/compiler.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/asm/posix_types.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/asm/types.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/linux/types.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/machine/kernel.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/string.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/malloc.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/stdlib.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/alloca.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/strings.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/memory.h \
+ /Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/ctype.h \
+ libSYS/include/cmdl_parser.h libSYS/include/machine_type.h \
+ libSYS/include/genericStds.h
+
+/Applications/android-ndk-r13/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9.x/include/stdarg.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/stdio.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/cdefs.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/cdefs_elf.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/android/api-level.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/types.h:
+
+/Applications/android-ndk-r13/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9.x/include/stddef.h:
+
+/Applications/android-ndk-r13/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9.x/include/stdint.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/stdint.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/_types.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/machine/_types.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/linux/posix_types.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/linux/stddef.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/linux/compiler.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/asm/posix_types.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/asm/types.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/linux/types.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/machine/kernel.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/string.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/malloc.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/stdlib.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/alloca.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/strings.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/memory.h:
+
+/Applications/android-ndk-r13/platforms/android-14/arch-arm/usr/include/ctype.h:
+
+libSYS/include/cmdl_parser.h:
+
+libSYS/include/machine_type.h:
+
+libSYS/include/genericStds.h:
