@@ -42,16 +42,16 @@ android {
 //            jniLibs.srcDirs = ['libs']
 //        }
 //    }
-        /**
-         * manifest.srcFile 'AndroidManifest.xml'
-         java.srcDirs = ['src']
-         resources.srcDirs = ['src']
-         aidl.srcDirs = ['src']
-         renderscript.srcDirs = ['src']
-         res.srcDirs = ['res']
-         assets.srcDirs = ['assets']
-         *
-         */
+    /**
+     * manifest.srcFile 'AndroidManifest.xml'
+     java.srcDirs = ['src']
+     resources.srcDirs = ['src']
+     aidl.srcDirs = ['src']
+     renderscript.srcDirs = ['src']
+     res.srcDirs = ['res']
+     assets.srcDirs = ['assets']
+     *
+     */
 
 //    }
     lintOptions {
@@ -78,10 +78,11 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation supportDependencies["appCompatV7"]
     testImplementation testDependecencies["junit"]
-    implementation project(':libraries:libmodule')
+    api project(':libraries:libmodule')
 }

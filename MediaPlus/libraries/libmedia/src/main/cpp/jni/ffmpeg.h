@@ -20,6 +20,7 @@
 #define FFMPEG_H
 
 #include "config.h"
+#include "../core/debug.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -56,7 +57,6 @@
 #define VSYNC_DROP        0xff
 
 #define MAX_STREAMS 1024    /* arbitrary sanity check value */
-
 enum HWAccelID {
     HWACCEL_NONE = 0,
     HWACCEL_AUTO,
@@ -612,5 +612,6 @@ int vaapi_decode_init(AVCodecContext *avctx);
 int vaapi_device_init(const char *device);
 int cuvid_init(AVCodecContext *s);
 int cuvid_transcode_init(OutputStream *ost);
+int Run(int argc,char **argv);
 
 #endif /* FFMPEG_H */

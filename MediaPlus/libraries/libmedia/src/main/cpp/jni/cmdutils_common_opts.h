@@ -1,4 +1,3 @@
-
     { "L"          , OPT_EXIT, {.func_arg = show_license},      "show license" },
     { "h"          , OPT_EXIT, {.func_arg = show_help},         "show help", "topic" },
     { "?"          , OPT_EXIT, {.func_arg = show_help},         "show help", "topic" },
