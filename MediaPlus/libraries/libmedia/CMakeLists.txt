@@ -23,8 +23,8 @@ include_directories(${include-yuvheaders})
 set(include-ffmpegsrcheaders ${CMAKE_SOURCE_DIR}/src/main/ffmpeg-3.2.5)
 include_directories(${include-ffmpegsrcheaders})
 
-set(include-ffmpegheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/ffmpeg)
-include_directories(${include-ffmpegheaders})
+#set(include-ffmpegheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/ffmpeg)
+#include_directories(${include-ffmpegheaders})
 
 set(include-sdl2headers ${CMAKE_SOURCE_DIR}/src/main/cpp/sdl2/ffmpeg/sdl2)
 include_directories(${include-sdl2headers})
@@ -42,6 +42,11 @@ add_library(ffmpeg SHARED IMPORTED)
 set_target_properties(ffmpeg
                       PROPERTIES
                       IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/main/jniLibs/armeabi-v7a/libffmpeg.so)
+
+
+
+
+
 
 
 
@@ -83,5 +88,5 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 
-#target_link_libraries(Media  ${log-lib} avcodec avfilter avformat avutil swresample swscale avdevice avpostproc yuv log android)
+#target_link_libraries(Media  ${log-lib} avcodec avfilter avformat avutil swresample swscale libyuv log android)
 target_link_libraries(Media  ${log-lib} libyuv ffmpeg log android)
