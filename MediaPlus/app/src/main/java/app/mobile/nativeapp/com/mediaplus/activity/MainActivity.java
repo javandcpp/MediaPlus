@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btnPushStream).setOnClickListener(this);
+        findViewById(R.id.btnFFmpegCommand).setOnClickListener(this);
 
     }
 
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btnPushStream:
                 startActivity(new Intent(this, LiveActivity.class));
+                break;
+            case R.id.btnFFmpegCommand:
+                startActivity(new Intent(this,FFmpegCommandActivity.class));
                 break;
 
         }

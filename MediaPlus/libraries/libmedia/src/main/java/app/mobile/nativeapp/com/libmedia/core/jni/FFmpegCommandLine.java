@@ -32,7 +32,9 @@ package app.mobile.nativeapp.com.libmedia.core.jni;
  */
 
 public class FFmpegCommandLine {
-
+    static {
+        System.loadLibrary("Media");
+    }
 
     public static native int runCommand(int argc,String[] argv);
 }
