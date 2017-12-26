@@ -1,0 +1,31 @@
+<!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2017 Huawque
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  ~
+  ~ @author:weichang
+  ~ https://github.com/javandoc/MediaPlus
+  -->
+
+<vector android:height="24dp" android:viewportHeight="1024.0"
+    android:viewportWidth="1024.0" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FF6600" android:pathData="M513,61.4q93.2,0 175.1,35.3t142.8,96.8 96.3,143.9 35.3,175.6 -35.3,175.6 -96.3,143.9 -142.8,96.8 -175.1,35.3T337.9,929.3t-142.8,-96.8T98.8,688.6 63.5,513t35.3,-175.6 96.3,-143.9T337.9,96.8 513,61.4zM690.2,556q10.2,-10.2 15.9,-26.6t5.6,-33.8 -6.1,-33.8 -18.4,-25.6q-48.1,-35.8 -103.9,-83.5t-120.3,-89.6q-14.3,-9.2 -28.2,-8.7t-25.1,8.2 -17.9,22.5 -6.7,35.3L385,706.6q0,23.6 8.7,36.9t22,17.9 28.2,2 26.1,-11.8q25.6,-19.5 53.8,-44t56.8,-50.2 56.3,-51.7 53.2,-49.7z"/>
+</vector>

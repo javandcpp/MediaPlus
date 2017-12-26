@@ -27,36 +27,32 @@
 
 package app.mobile.nativeapp.com.mediaplus.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.SurfaceView;
 
+import app.mobile.nativeapp.com.libmedia.core.player.MediaPlusPlayer;
 import app.mobile.nativeapp.com.mediaplus.R;
+import butterknife.ButterKnife;
+
+/**
+ * SDL_android.c 是底层与SDLActivity的回调等相关调用
+ */
+
+public class PlayerActivity extends BaseActivity {
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private SurfaceView mSurfaceView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        findViewById(R.id.btnPushStream).setOnClickListener(this);
-        findViewById(R.id.btnPlayer).setOnClickListener(this);
+        setContentView(R.layout.activity_player);
+        ButterKnife.bind(this);
 
+        mSurfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+
+        MediaPlusPlayer mediaPlusPlayer = new MediaPlusPlayer();
+        mediaPlusPlayer.setDisplay(mSurfaceView.getHolder());
+        mediaPlusPlayer.setScreenOnWhilePlaying(true);
     }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btnPushStream:
-                startActivity(new Intent(this, LiveActivity.class));
-                break;
-            case R.id.btnPlayer:
-                startActivity(new Intent(this,PlayerActivity.class));
-                break;
-
-        }
-    }
-
-
 }

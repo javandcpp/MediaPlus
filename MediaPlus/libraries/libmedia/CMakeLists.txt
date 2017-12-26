@@ -43,6 +43,7 @@ set_target_properties(ffmpeg
 file(GLOB native_core_srcs "src/main/cpp/core/*.cpp")
 file(GLOB native_jni_srcs "src/main/cpp/jni/*.cpp")
 file(GLOB native_event_srcs "src/main/cpp/event/*.cpp")
+file(GLOB native_player_srcs "src/main/cpp/player/*.cpp")
 
 add_library( # Sets the name of the library.
              Media
@@ -55,6 +56,7 @@ add_library( # Sets the name of the library.
              ${native_jni_srcs}
              ${native_core_srcs}
              ${native_event_srcs}
+             ${native_player_srcs}
              )
 
 # Searches for a specified prebuilt library and stores the path as a

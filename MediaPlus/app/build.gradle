@@ -42,16 +42,16 @@ android {
 //            jniLibs.srcDirs = ['libs']
 //        }
 //    }
-        /**
-         * manifest.srcFile 'AndroidManifest.xml'
-         java.srcDirs = ['src']
-         resources.srcDirs = ['src']
-         aidl.srcDirs = ['src']
-         renderscript.srcDirs = ['src']
-         res.srcDirs = ['res']
-         assets.srcDirs = ['assets']
-         *
-         */
+    /**
+     * manifest.srcFile 'AndroidManifest.xml'
+     java.srcDirs = ['src']
+     resources.srcDirs = ['src']
+     aidl.srcDirs = ['src']
+     renderscript.srcDirs = ['src']
+     res.srcDirs = ['res']
+     assets.srcDirs = ['assets']
+     *
+     */
 
 //    }
     lintOptions {
@@ -85,4 +85,5 @@ dependencies {
     testCompile testDependecencies["junit"]
     releaseCompile project(path: ':libraries:libmodule', configuration: 'release')
     debugCompile project(path: ':libraries:libmodule', configuration: 'debug')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

@@ -180,6 +180,8 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     int result = vm->GetEnv((void **) &env, JNI_VERSION_1_6);
     Verify(result == JNI_OK, "Could not get JNI environment");
 
+    JNI_OnLoad_Play(javaVM,reserved);
+
     applicationClass = env->FindClass(
             "app/mobile/nativeapp/com/libmedia/core/nativehandler/NativeCrashHandler");
     Verify(applicationClass, "Could not find NativeCrashHandler java class");

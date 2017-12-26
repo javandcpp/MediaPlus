@@ -1,0 +1,14 @@
+//
+// Created by developer on 12/26/17.
+//
+
+#ifndef MEDIAPLUS_MEDIAPLUSPLAYER_H
+#define MEDIAPLUS_MEDIAPLUSPLAYER_H
+
+
+
+
+
+
+
+#endif //MEDIAPLUS_MEDIAPLUSPLAYER_H

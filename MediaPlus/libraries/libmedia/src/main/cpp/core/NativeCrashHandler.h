@@ -7,6 +7,8 @@
 extern "C" {
 #endif
 
+extern void JNI_OnLoad_Play(JavaVM *vm, void *reserved);
+
 //void nativeCrashHandler_onLoad(JavaVM* jvm);
 jint JNI_OnLoad(JavaVM *vm, void *reserved);
 
