@@ -80,6 +80,7 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         final TextView tvRx = (TextView) findViewById(R.id.tvRxBytes);
         ivWaterMark = ((ImageView) findViewById(R.id.ivWaterMark));
         etPushUrl = (EditText) findViewById(R.id.etStreamAddress);
+        etPushUrl.setText("/mnt/sdcard/test.flv");
         mHandler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message message) {

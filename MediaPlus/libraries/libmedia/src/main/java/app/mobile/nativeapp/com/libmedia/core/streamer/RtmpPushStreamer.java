@@ -31,9 +31,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
-import android.media.Image;
-import android.net.rtp.RtpStream;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -47,11 +44,6 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.guagua.avcapture.AudioCaptureInterface;
-import com.guagua.avcapture.VideoCaptureInterface;
-import com.guagua.avcapture.impl.AudioCapture;
-import com.guagua.avcapture.impl.VideoCapture;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,16 +51,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.List;
-import java.util.Set;
 
 import app.mobile.nativeapp.com.applicationmanagement.utils.ImageUtils;
+import app.mobile.nativeapp.com.libmedia.core.avcapture.AudioCaptureInterface;
+import app.mobile.nativeapp.com.libmedia.core.avcapture.VideoCaptureInterface;
+import app.mobile.nativeapp.com.libmedia.core.avcapture.impl.AudioCapture;
+import app.mobile.nativeapp.com.libmedia.core.avcapture.impl.VideoCapture;
 import app.mobile.nativeapp.com.libmedia.core.config.VideoSizeConfig;
 import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
 import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
 
-import static android.R.attr.bitmap;
-import static android.R.id.list;
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
 
 /**

@@ -16,7 +16,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags "-std=c++11 -frtti -fno-exceptions"
+                cppFlags "-std=c++11 -frtti -fexceptions"
 //                -frtti 开启RTTI的支持（dynamic_cast和typeid需要用到），和vs c++不同，这在gcc中是默认选项。使用"-fno-rtti"将其禁用。
 //                -fno-rtti 禁用运行时类型信息
 //                -fno-exceptions 禁用异常机制
@@ -75,5 +75,6 @@ dependencies {
     compile supportDependencies["appCompatV7"]
     testCompile testDependecencies["junit"]
     compile project(':libraries:applicationmanagement')
-    compile files('libs/avcapture.jar')
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
 }

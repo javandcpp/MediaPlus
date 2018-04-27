@@ -30,7 +30,7 @@ ext {
     SUPPORT_V4_VERSION = "25.3.0"
     SUPPORT_V7_VERSION = "25.3.1"
     COMPILE_SDK_VERSION = 25
-    BUILD_TOOLS_VERSION = "25.0.1"
+    BUILD_TOOLS_VERSION = "26.0.2"
     support_annotation = "26.0.0-alpha1"
     ijk_player = "0.7.5"
     videocache = "2.6.4"

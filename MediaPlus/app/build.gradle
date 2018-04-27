@@ -83,6 +83,5 @@ dependencies {
     })
     compile supportDependencies["appCompatV7"]
     testCompile testDependecencies["junit"]
-    releaseCompile project(path: ':libraries:libmodule', configuration: 'release')
-    debugCompile project(path: ':libraries:libmodule', configuration: 'debug')
+    compile project(':libraries:libmodule')
 }

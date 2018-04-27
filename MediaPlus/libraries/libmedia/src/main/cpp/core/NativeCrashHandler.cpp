@@ -11,6 +11,7 @@
 #include <pthread.h>
 
 #include <dlfcn.h>
+#include <malloc.h>
 
 #ifndef NDEBUG
 #define Verify(x, r)  assert((x) && r)
