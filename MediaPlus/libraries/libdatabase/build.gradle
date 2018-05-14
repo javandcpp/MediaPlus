@@ -24,12 +24,12 @@
  * @author:weichang
  * https://github.com/javandoc/MediaPlus
  */
-
 apply plugin: 'com.android.library'
+apply from: "${project.rootDir}/global.gradle"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion 15
