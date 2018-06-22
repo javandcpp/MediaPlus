@@ -24,7 +24,6 @@
  * @author:weichang
  * https://github.com/javandoc/MediaPlus
  */
-
 apply plugin: 'com.android.library'
 apply from: "${project.rootDir}/global.gradle"
 

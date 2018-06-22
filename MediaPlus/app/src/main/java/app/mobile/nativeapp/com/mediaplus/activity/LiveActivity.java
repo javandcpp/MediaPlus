@@ -28,15 +28,14 @@
 package app.mobile.nativeapp.com.mediaplus.activity;
 
 import android.Manifest;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
@@ -56,7 +55,7 @@ import app.mobile.nativeapp.com.libmedia.core.streamer.RtmpPushStreamer;
 import app.mobile.nativeapp.com.mediaplus.R;
 
 
-public class LiveActivity extends AppCompatActivity implements View.OnClickListener {
+public class LiveActivity extends Activity implements View.OnClickListener {
     private final int SUCCESS = 100 << 1;
     private SurfaceView surfaceView;
     private TextView tvVideo;
@@ -185,14 +184,14 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
         super.onStop();
     }
 
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
+        super.onBackPressed();
         if (null != mRtmpPushStreamer) {
             mRtmpPushStreamer.destroy();
         }
     }
-
 
     @Override
     public void onClick(View view) {
@@ -203,9 +202,18 @@ public class LiveActivity extends AppCompatActivity implements View.OnClickListe
                     btnStart.setText("开始直播");
                     mHandler.removeCallbacksAndMessages(null);
                 } else {
-                    mRtmpPushStreamer.startSpeak(etPushUrl.getText().toString().trim());
-
-                }
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    mRtmpPushStreamer.startSpeak(etPushUrl.getText().toString());
+            }
                 break;
             case R.id.btnSwitchCamera:
                 mRtmpPushStreamer.SwitchCamera();

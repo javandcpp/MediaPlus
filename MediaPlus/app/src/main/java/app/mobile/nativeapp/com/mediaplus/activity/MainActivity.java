@@ -27,16 +27,15 @@
 
 package app.mobile.nativeapp.com.mediaplus.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
 import app.mobile.nativeapp.com.mediaplus.R;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

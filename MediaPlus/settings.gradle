@@ -1,1 +1,8 @@
 include ':app', ':libraries:libmedia', ':libraries:libmodule', ':libraries:libnet', ':libraries:libmvp', ':libraries:libdatabase', ':libraries:applicationmanagement', 'libraries:processor'
+
+
+println '==================gradle init==============='
+
+
+def dir = this.getRootDir();
+println "rootdir:${dir}"

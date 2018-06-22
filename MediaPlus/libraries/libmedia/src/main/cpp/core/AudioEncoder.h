@@ -8,6 +8,7 @@
 #include "MediaEncoder.h"
 #include "AudioCapture.h"
 #include <list>
+#define WRITE_PCM_TO_FILE
 
 using namespace std;
 

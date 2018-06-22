@@ -44,6 +44,11 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.guagua.avcapture.AudioCaptureInterface;
+import com.guagua.avcapture.VideoCaptureInterface;
+import com.guagua.avcapture.impl.AudioCapture;
+import com.guagua.avcapture.impl.VideoCapture;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,10 +58,6 @@ import java.io.RandomAccessFile;
 import java.util.List;
 
 import app.mobile.nativeapp.com.applicationmanagement.utils.ImageUtils;
-import app.mobile.nativeapp.com.libmedia.core.avcapture.AudioCaptureInterface;
-import app.mobile.nativeapp.com.libmedia.core.avcapture.VideoCaptureInterface;
-import app.mobile.nativeapp.com.libmedia.core.avcapture.impl.AudioCapture;
-import app.mobile.nativeapp.com.libmedia.core.avcapture.impl.VideoCapture;
 import app.mobile.nativeapp.com.libmedia.core.config.VideoSizeConfig;
 import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
@@ -303,8 +304,11 @@ public class RtmpPushStreamer extends
     public void startSpeak(String Pushurl) {
         mPushurl = Pushurl;
         if (!speak) {
+            speak = true;
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
             if (startPushStream(mPushurl)) {
-                speak = true;
                 if (mPushStreamCallBack != null) {
                     mPushStreamCallBack.PushSucess();
                 }
@@ -314,6 +318,9 @@ public class RtmpPushStreamer extends
                     mPushStreamCallBack.PushFailed();
                 }
             }
+//                }
+//            }, 2000);
+
         }
     }
 
@@ -496,12 +503,14 @@ public class RtmpPushStreamer extends
             while (!m_bExit) {
                 try {
                     Thread.sleep(1, 10);
+
                     if (m_bExit) {
                         break;
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                Log.d("---->video thread", "video data");
                 ret = mVideoCapture.GetFrameData(m_nv21Data,
                         m_nv21Data.length);
                 if (ret == VideoCaptureInterface.GetFrameDataReturn.RET_SUCCESS) {
@@ -548,6 +557,7 @@ public class RtmpPushStreamer extends
             while (!m_bExit) {
                 try {
                     Thread.sleep(1, 10);
+
                     if (m_bExit) {
                         break;
                     }
@@ -555,13 +565,15 @@ public class RtmpPushStreamer extends
                     e.printStackTrace();
                 }
                 try {
+//                    if (speak) {
+                    Log.d("---->audio thread", "audio data");
                     ret = mAudioCapture.GetAudioData(audioBuffer,
                             m_aiBufferLength[0], dataLength);
                     if (ret == AudioCaptureInterface.GetAudioDataReturn.RET_SUCCESS) {
                         encodeAudio(audioBuffer, dataLength[0]);
 
+//                        }
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     stopThread();
