@@ -5,10 +5,9 @@
  * JNI 底层推流
  */
 #include <jni.h>
+#include <fstream>
 #include "Jni_Live_Manage.h"
 #include "../core/FilterFactory.h"
-
-
 
 
 #ifdef __cplusplus
@@ -46,6 +45,13 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_Close(JNIEnv
     isClose = true;
     startStream = false;
     LOG_D(DEBUG, "jni close");
+
+#ifdef _LEAK_DETECT_
+    leaktracer::MemoryTrace::GetInstance().stopMonitoringAllocations();
+    leaktracer::MemoryTrace::GetInstance().stopAllMonitoring();
+    av_usleep(10000);
+    leaktracer::MemoryTrace::GetInstance().writeLeaksToFile("/mnt/sdcard/leaks.out");
+#endif
     mMutex.unlock();
     return 0;
 }
@@ -206,6 +212,10 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_StartPush(JN
                                                                               jclass type,
                                                                               jstring url_) {
     mMutex.lock();
+#ifdef _LEAK_DETECT_
+    leaktracer::MemoryTrace::GetInstance().startMonitoringAllThreads();
+#endif
+
     if (videoCaptureInit && audioCaptureInit) {
         startStream = true;
         isClose = false;
@@ -281,7 +291,7 @@ Java_app_mobile_nativeapp_com_libmedia_core_jni_LiveJniMediaManager_DrawText(JNI
     int ret = 0;
     if (NULL != videoEncoder) {
         FilterFactory *filterFactory = FilterFactory::Get();
-        DrawTextFilter *pTextFilter = filterFactory->createDrawTextFilter(fontPath,text, &x, &y);
+        DrawTextFilter *pTextFilter = filterFactory->createDrawTextFilter(fontPath, text, &x, &y);
         ret = videoEncoder->SetFilter(pTextFilter);
     }
     env->ReleaseStringUTFChars(text_, text);

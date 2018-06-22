@@ -24,6 +24,9 @@ include_directories(${include-ffmpegheaders})
 set(include-sdl2headers ${CMAKE_SOURCE_DIR}/src/main/cpp/sdl2/ffmpeg/sdl2)
 include_directories(${include-sdl2headers})
 
+set(include-leaktracerheaders ${CMAKE_SOURCE_DIR}/src/main/cpp/3rdlibrary/libleaktracer/include)
+include_directories(${include-leaktracerheaders})
+
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/libs/${ANDROID_ABI})
 
 
@@ -43,6 +46,7 @@ set_target_properties(ffmpeg
 file(GLOB native_core_srcs "src/main/cpp/core/*.cpp")
 file(GLOB native_jni_srcs "src/main/cpp/jni/*.cpp")
 file(GLOB native_event_srcs "src/main/cpp/event/*.cpp")
+file(GLOB native_leak_srcs "src/main/cpp/3rdlibrary/libleaktracer/src/*.cpp")
 
 add_library( # Sets the name of the library.
              Media
@@ -55,6 +59,7 @@ add_library( # Sets the name of the library.
              ${native_jni_srcs}
              ${native_core_srcs}
              ${native_event_srcs}
+             ${native_leak_srcs}
              )
 
 # Searches for a specified prebuilt library and stores the path as a

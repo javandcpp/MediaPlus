@@ -15,6 +15,8 @@
 #include "../core/RtmpStreamer.h"
 #include "../core/AudioCapture.h"
 #include "../core/CombineVideoHelper.h"
+#include "../3rdlibrary/libleaktracer/include/MemoryTrace.hpp"
+//#define _LEAK_DETECT_
 
 AudioCapture *audioCapture = NULL;
 VideoCapture *videoCapture = NULL;
@@ -36,5 +38,7 @@ bool isRelease = false;
 bool startStream;
 
 mutex mMutex;
+
+using namespace std;
 
 #endif
