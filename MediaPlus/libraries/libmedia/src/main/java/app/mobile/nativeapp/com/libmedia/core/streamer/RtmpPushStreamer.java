@@ -44,11 +44,6 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.guagua.avcapture.AudioCaptureInterface;
-import com.guagua.avcapture.VideoCaptureInterface;
-import com.guagua.avcapture.impl.AudioCapture;
-import com.guagua.avcapture.impl.VideoCapture;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -58,7 +53,12 @@ import java.io.RandomAccessFile;
 import java.util.List;
 
 import app.mobile.nativeapp.com.applicationmanagement.utils.ImageUtils;
+import app.mobile.nativeapp.com.libmedia.core.avcapture.AudioCaptureInterface;
+import app.mobile.nativeapp.com.libmedia.core.avcapture.VideoCaptureInterface;
+import app.mobile.nativeapp.com.libmedia.core.avcapture.impl.AudioCapture;
+import app.mobile.nativeapp.com.libmedia.core.avcapture.impl.VideoCapture;
 import app.mobile.nativeapp.com.libmedia.core.config.VideoSizeConfig;
+import app.mobile.nativeapp.com.libmedia.core.inter.SaveFrameCallBack;
 import app.mobile.nativeapp.com.libmedia.core.jni.LibJniVideoProcess;
 import app.mobile.nativeapp.com.libmedia.core.jni.LiveJniMediaManager;
 import app.mobile.nativeapp.com.libmedia.core.nativehandler.NativeCrashHandler;
@@ -105,6 +105,7 @@ public class RtmpPushStreamer extends
     private boolean speak;
     private ImageUtils mImageUtils;
     private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener;
+    private SaveFrameCallBack mSaveFrameCallBack;
 
 
     private RtmpPushStreamer(Activity context, SurfaceView surfaceView, boolean waterMarkEnable, ImageView waterMarkView, int waterWPixels, int waterHPixels, PushStreamCall pushStreamCallBack) {
@@ -478,6 +479,10 @@ public class RtmpPushStreamer extends
 
     }
 
+    public void addFrameCallback(SaveFrameCallBack saveFrameCallBack) {
+        this.mSaveFrameCallBack = saveFrameCallBack;
+    }
+
 
     /**
      * 视频采集线程
@@ -492,6 +497,8 @@ public class RtmpPushStreamer extends
         byte[] m_RotateData = new byte[mVideoSizeConfig.srcFrameWidth
                 * mVideoSizeConfig.srcFrameHeight * 3 / 2];
         byte[] m_MirrorData = new byte[mVideoSizeConfig.srcFrameWidth
+                * mVideoSizeConfig.srcFrameHeight * 3 / 2];
+        byte[] m_DisPlayData = new byte[mVideoSizeConfig.srcFrameWidth
                 * mVideoSizeConfig.srcFrameHeight * 3 / 2];
 
         @Override
@@ -513,7 +520,12 @@ public class RtmpPushStreamer extends
                 Log.d("---->video thread", "video data");
                 ret = mVideoCapture.GetFrameData(m_nv21Data,
                         m_nv21Data.length);
+
                 if (ret == VideoCaptureInterface.GetFrameDataReturn.RET_SUCCESS) {
+                    System.arraycopy(m_nv21Data, 0, m_DisPlayData, 0, m_nv21Data.length);
+                    if (null != mSaveFrameCallBack) {
+                        mSaveFrameCallBack.onSaveFrames(m_DisPlayData, m_DisPlayData.length);
+                    }
                     frameCount++;
                     LibJniVideoProcess.NV21TOI420(mVideoSizeConfig.srcFrameWidth, mVideoSizeConfig.srcFrameHeight, m_nv21Data, m_I420Data);
                     if (curCameraType == VideoCaptureInterface.CameraDeviceType.CAMERA_FACING_FRONT) {
@@ -522,6 +534,8 @@ public class RtmpPushStreamer extends
                     } else if (curCameraType == VideoCaptureInterface.CameraDeviceType.CAMERA_FACING_BACK) {
                         LibJniVideoProcess.RotateI420(mVideoSizeConfig.srcFrameWidth, mVideoSizeConfig.srcFrameHeight, m_I420Data, m_RotateData, 90);
                     }
+
+
                     encodeVideo(m_RotateData, m_RotateData.length);
                 }
             }
@@ -679,7 +693,7 @@ public class RtmpPushStreamer extends
             currentZoomLevel = 0;
             isLight = false;
             m_sCameraID = (short) i;
-            mVideoCapture.SetSurfaceHolder(mSurfaceHolder);
+//            mVideoCapture.SetSurfaceHolder(mSurfaceHolder);
             mVideoCapture.StartVideoCapture();
             if (m_oVideoThread == null
                     || m_oVideoThread.isAlive() == false) {

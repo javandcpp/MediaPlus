@@ -53,6 +53,7 @@ import app.mobile.nativeapp.com.applicationmanagement.permission.PermissionManag
 import app.mobile.nativeapp.com.libmedia.core.streamer.PushStreamCall;
 import app.mobile.nativeapp.com.libmedia.core.streamer.RtmpPushStreamer;
 import app.mobile.nativeapp.com.mediaplus.R;
+import app.mobile.nativeapp.com.mediaplus.opengl.CameraGLSurfaceView;
 
 
 public class LiveActivity extends Activity implements View.OnClickListener {
@@ -122,7 +123,7 @@ public class LiveActivity extends Activity implements View.OnClickListener {
         PermissionManager.getInstance(this).permissonCheck(new PermissionCheckResult() {
             @Override
             public void granted() {
-                SurfaceView surfaceView = new SurfaceView(LiveActivity.this);
+                CameraGLSurfaceView surfaceView = new CameraGLSurfaceView(LiveActivity.this);
                 mRtmpPushStreamer = new RtmpPushStreamer.Builder()
                         .withActivity(LiveActivity.this)//上下文
                         .withSurfaceView(surfaceView)//SurfaceView
@@ -151,7 +152,9 @@ public class LiveActivity extends Activity implements View.OnClickListener {
                     int height = getWindowManager().getDefaultDisplay().getHeight();
                     surfaceView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
                 }
+                mRtmpPushStreamer.addFrameCallback(surfaceView);
                 videoParent.addView(surfaceView);
+
             }
 
             @Override
